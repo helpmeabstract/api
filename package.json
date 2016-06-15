@@ -1,0 +1,19 @@
+{
+  "name": "helpmeabstract",
+  "version": "1.0.0",
+  "description": "Get feedback from veteran speakers before you submit",
+  "main": "public/app.js",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/helpmeabstract/helpmeabstract"
+  },
+  "author": "Graham Daniels",
+  "license": "MIT"
+}
