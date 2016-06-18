@@ -4,7 +4,8 @@
   "description": "Get feedback from veteran speakers before you submit",
   "main": "public/app.js",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "grant-express": "^3.6.2"
   },
   "devDependencies": {},
   "scripts": {
