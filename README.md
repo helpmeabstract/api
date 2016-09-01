@@ -9,14 +9,18 @@
 ### Setting Up Your Dev Environment
 
 ```bash
+# Install Gulp
+> npm install -g gulp
+
 # Install typings
 > npm install -g typings
-
-# Start the docker container(s)
-> docker-compose up
+> typings install
 
 # Compile yo' typescript
 > gulp compile
+
+# Start the docker container(s)
+> docker-compose up
 
 # Automatically compile-on-change
 > gulp watch
