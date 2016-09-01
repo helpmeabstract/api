@@ -7,14 +7,17 @@
     "express": "^4.13.4",
     "grant-express": "^3.6.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-typescript": "^2.13.6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/helpmeabstract/helpmeabstract"
+    "url": "github.com/helpmeabstract/api"
   },
-  "author": "Graham Daniels",
   "license": "MIT"
 }
