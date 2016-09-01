@@ -1,3 +1,5 @@
+/// <reference path="../typings/index.d.ts" />
+
 import express = require('express');
 import { Api } from './app';
 
