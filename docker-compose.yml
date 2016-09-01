@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app:
+    build: .
+    volumes:
+      - ./app:/app
+    ports:
+      - 8080:8080
+    entrypoint: nodemon -L main.js
