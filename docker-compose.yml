@@ -2,8 +2,22 @@ version: '2'
 services:
   app:
     build: .
+    environment:
+      - MYSQL_USER=helpmeabstract
+      - MYSQL_PASSWORD=securelol
     volumes:
       - ./app:/app
     ports:
       - 8080:8080
     entrypoint: nodemon -L main.js
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=helpmeabstract
+      - MYSQL_USER=helpmeabstract
+      - MYSQL_PASSWORD=securelol
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
