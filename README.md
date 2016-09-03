@@ -4,24 +4,17 @@
 
 ### Stuff You'll Need
 - A working docker on your local system
-- A local node(4) install for running gulp and stuff
+- composer
+- php (for running composer)
 
 ### Setting Up Your Dev Environment
 
 ```bash
-# Install Gulp
-> npm install -g gulp
-
-# Install typings
-> npm install -g typings
-> typings install
-
-# Compile yo' typescript
-> gulp compile
+# Install deps
+> composer install --ignore-platform-reqs
 
 # Start the docker container(s)
 > docker-compose up
-
-# Automatically compile-on-change
-> gulp watch
 ```
+
+Hit http://localhost:8080 and rejoice! <3
