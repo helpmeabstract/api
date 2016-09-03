@@ -1,19 +1,14 @@
-FROM node:argon
+FROM php:7-apache
+RUN apt-get update && apt-get install -y zlib1g-dev git && apt-get clean && apt-get autoremove
+RUN docker-php-ext-install zip
 
-# Create a user
-RUN useradd --system --user-group --create-home app && mkdir /app && chown app:app /app
+COPY /scripts/install_composer.php /tmp
+RUN php /tmp/install_composer.php
 
-# Install some nodemon
-RUN npm install -g nodemon
+RUN chown -R www-data:www-data /var/www
+WORKDIR /var/www
+COPY composer.json ./composer.json
+COPY src ./src/
+COPY html ./html/
+RUN composer install --no-dev --no-interaction --no-ansi --no-plugins --no-scripts
 
-# Install dependency outside of the app volume
-COPY package.json /opt/
-RUN cd /opt && npm install
-ENV NODE_PATH=/opt/node_modules
-
-VOLUME ["/app"]
-COPY ./app /app/
-USER app
-WORKDIR /app
-EXPOSE 8080
-ENTRYPOINT ["/app/entrypoint.sh"]

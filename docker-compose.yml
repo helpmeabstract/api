@@ -6,10 +6,9 @@ services:
       - MYSQL_USER=helpmeabstract
       - MYSQL_PASSWORD=securelol
     volumes:
-      - ./app:/app
+      - .:/var/www
     ports:
-      - 8080:8080
-    entrypoint: nodemon -L main.js
+      - "8080:80"
     depends_on:
       - db
     links:
