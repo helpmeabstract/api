@@ -3,11 +3,10 @@
 
 namespace HelpMeAbstract\Providers;
 
-
+use HelpMeAbstract\Controllers\User;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use League\Route\RouteGroup;
 
 class RouterServiceProvider extends AbstractServiceProvider
 {
@@ -27,17 +26,15 @@ class RouterServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(
             RouteCollection::class,
-            function () {
+            function () : RouteCollection {
                 $router = new RouteCollection();
-                $router->map(
-                    'GET',
-                    '/',
-                    function (ServerRequestInterface $request, ResponseInterface $response) {
-                        $response->getBody()->write('<h1>Hello, World!</h1>');
-
-                        return $response;
+                $router->group(
+                    '/users',
+                    function (RouteGroup $userRouter) {
+                        $userRouter->map('GET', '/', [$this->container->get(User::class), 'list']);
                     }
                 );
+
                 return $router;
             }
         );

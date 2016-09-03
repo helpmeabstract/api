@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace HelpMeAbstract;
 
-
 use League\Route\RouteCollection;
 use Zend\Diactoros\Response\SapiEmitter;
 
@@ -21,5 +20,4 @@ class Application
         $response = $router->dispatch($this->container->get('request'), $this->container->get('response'));
         $this->container->get(SapiEmitter::class)->emit($response);
     }
-
 }

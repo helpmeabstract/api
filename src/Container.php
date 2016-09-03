@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace HelpMeAbstract;
 
+use HelpMeAbstract\Providers\ControllerServiceProvider;
+use HelpMeAbstract\Providers\LoggerServiceProvider;
 use HelpMeAbstract\Providers\RouterServiceProvider;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
@@ -28,6 +32,10 @@ class Container extends \League\Container\Container
             }
         );
 
+        $this->addServiceProvider(new LoggerServiceProvider());
         $this->addServiceProvider(new RouterServiceProvider());
+        $this->addServiceProvider(new ControllerServiceProvider());
+
+        $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
     }
 }
