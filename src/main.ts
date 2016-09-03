@@ -1,7 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 
 import express = require('express');
-import { Api } from './app';
+import { Api } from './api';
 
 // Configuration
 let port = process.env.LISTEN_PORT || 8080;
