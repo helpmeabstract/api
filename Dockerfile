@@ -12,5 +12,3 @@ ONBUILD COPY ./scripts/entrypoint.sh /var/www/scripts/entrypoint.sh
 
 ONBUILD COPY ./scripts/install_composer /tmp
 ONBUILD RUN php /tmp/install_composer.php && composer install && composer dump-autoload -o
-
-ENTRYPOINT /var/www/scripts/entrypoint.sh
