@@ -12,7 +12,7 @@ use Whoops\Run;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
-class Application
+final class Application
 {
     public function __construct()
     {

@@ -21,7 +21,7 @@ use Zend\Diactoros\ServerRequestFactory;
  *
  * @package HelpMeAbstract
  */
-class Container extends \League\Container\Container
+final class Container extends \League\Container\Container
 {
     public function __construct()
     {
