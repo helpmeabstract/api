@@ -32,6 +32,10 @@ class RouterServiceProvider extends AbstractServiceProvider
                     '/users',
                     function (RouteGroup $userRouter) {
                         $userRouter->get('/', [$this->container->get(User::class), 'list']);
+                        $userRouter->post('/', [$this->container->get(User::class), 'create']);
+                        $userRouter->put('/{id:number}', [$this->container->get(User::class), 'update']);
+                        $userRouter->get('/{id:number}', [$this->container->get(User::class), 'get']);
+                        $userRouter->delete('/{id:number}', [$this->container->get(User::class), 'delete']);
                     }
                 );
 

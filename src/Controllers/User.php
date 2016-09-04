@@ -24,5 +24,18 @@ class User implements LoggerAwareInterface
         return new TextResponse("Help Me Abstract!");
     }
 
+    public function create(Request $request, Response $response): Response
+    {
+        return new TextResponse("Help Me Abstract!");
+    }
 
+    public function update(Request $request, Response $response): Response
+    {
+        return new TextResponse("Help Me Abstract!");
+    }
+
+    public function delete(Request $request, Response $response): Response
+    {
+        return new TextResponse("Help Me Abstract!");
+    }
 }
