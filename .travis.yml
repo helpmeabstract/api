@@ -25,7 +25,7 @@ install:
   - composer install
 
 script:
-  - vendor/bin/doctrine orm:info
+#  - vendor/bin/doctrine orm:info
   - vendor/bin/phpunit --configuration test/Unit/phpunit.xml --coverage-clover build/logs/clover.xml;
   - vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run;
 
