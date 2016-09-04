@@ -11,5 +11,5 @@ WORKDIR /var/www
 COPY composer.json ./composer.json
 COPY src ./src/
 COPY html ./html/
-RUN composer install --no-dev --no-interaction --no-ansi --no-plugins --no-scripts
+RUN composer dump-autoload -o
 

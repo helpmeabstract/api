@@ -39,4 +39,5 @@ notifications:
     secure: Dce/DARAkK3rdCzu01U9IxLx1PoWPYyGXmFj9jFDEbGHY955DZhFUXpHC5SSdpONpAZXayHcSPFCd3zBTS9IvppbQU+5vDseErK2hmw9yKlSGVRI7lcS0ytryNHtUwSLZdxGGaURRWo9zJblFeIAOZiKFebN5VRpYTMA/J0flOA=
 
 after_success:
+  - composer install --no-dev
   - make deploy-staging AWS_PROFILE=default AWS_REGION=us-east-1
