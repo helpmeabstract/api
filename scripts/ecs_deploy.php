@@ -18,11 +18,10 @@ Assertion::string($aws_region);
 Assertion::string($cluster);
 Assertion::string($task_family);
 
-$aws_options =     [
+$aws_options = [
     'region' => $aws_region,
     'version' => '2014-11-13',
 ];
-
 
 if (getenv('AWS_ACCESS_KEY') && getenv('AWS_SECRET_ACCESS_KEY')) {
     $aws_options['AWS_ACCESS_KEY'] = getenv('AWS_ACCESS_KEY');
