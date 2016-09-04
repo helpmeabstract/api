@@ -8,8 +8,7 @@ if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     echo "[default]" >> ~/.aws/credentials
     echo "aws_access_key_id=${AWS_ACCESS_KEY}" >> ~/.aws/credentials
     echo "aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
-    php ./scripts/ecs_deploy.php twr us-east-1 helpmeabstract-staging helpmeabstract-api
-    ./bin/ecs-deploy -c $TASK_DEFINITION -n $SERVICE -i $REMOTE_IMAGE_URL:$TRAVIS_BRANCH
+    make deploy-staging
   else
     echo "Skipping deploy because it's not an allowed branch"
   fi

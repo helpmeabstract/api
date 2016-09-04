@@ -40,4 +40,4 @@ notifications:
 
 after_success:
   - composer install --no-dev
-  - make deploy-staging AWS_PROFILE=default AWS_REGION=us-east-1
+  - bash scripts/travis_deploy.sh
