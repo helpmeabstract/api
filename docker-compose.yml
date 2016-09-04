@@ -5,6 +5,7 @@ services:
     environment:
       - MYSQL_USER=helpmeabstract
       - MYSQL_PASSWORD=securelol
+      - ENV=development
     volumes:
       - .:/var/www
     ports:
