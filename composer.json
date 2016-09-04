@@ -9,6 +9,8 @@
     }
   },
   "require": {
+    "doctrine/migrations": "^1.4",
+    "doctrine/orm": "^2.5",
     "filp/whoops": "^2.1",
     "league/container": "^2.2",
     "league/route": "^2.0",
@@ -17,8 +19,10 @@
     "zendframework/zend-diactoros": "^1.3"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.7",
-    "phpunit/phpunit": "^5.5"
+    "phpunit/phpunit": "^5.5",
+    "refinery29/php-cs-fixer-config": "^0.4.20",
+    "refinery29/test-util": "^0.8.3",
+    "squizlabs/php_codesniffer": "^2.7"
   },
   "config": {
     "sort-packages": true
