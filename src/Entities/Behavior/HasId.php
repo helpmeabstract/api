@@ -13,5 +13,4 @@ trait HasId
     {
         return $this->id;
     }
-
 }

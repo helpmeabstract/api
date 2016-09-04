@@ -8,8 +8,8 @@ use HelpMeAbstract\Entities\Behavior\HasId;
 
 class Notification
 {
-    const TYPE_COMMENT_RECEIVED = "comment_received";
-    const TYPE_SUBMISSION_SUBMITTED = "submission_recieved";
+    const TYPE_COMMENT_RECEIVED = 'comment_received';
+    const TYPE_SUBMISSION_SUBMITTED = 'submission_recieved';
 
     use HasId;
     use HasCreatedDate;
@@ -45,14 +45,14 @@ class Notification
     private $user;
 
     /**
-     * @var Resource
+     * @var resource
      */
     private $resource;
 
     /**
-     * @param User $user
-     * @param Resource $resource
-     * @param string $type
+     * @param User     $user
+     * @param resource $resource
+     * @param string   $type
      */
     public function __construct(User $user, Resource $resource, string $type)
     {

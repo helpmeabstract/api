@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace HelpMeAbstract\Controllers;
 
@@ -15,27 +16,28 @@ class User implements LoggerAwareInterface
 
     public function get(Request $request, Response $response): Response
     {
-        return new TextResponse("Help Me Abstract!");
+        return new TextResponse('Help Me Abstract!');
     }
 
     public function list(Request $request, Response $response): Response
     {
         $this->logger->alert("Look, ma! I'm loggin'!");
-        return new TextResponse("Help Me Abstract!");
+
+        return new TextResponse('Help Me Abstract!');
     }
 
     public function create(Request $request, Response $response): Response
     {
-        return new TextResponse("Help Me Abstract!");
+        return new TextResponse('Help Me Abstract!');
     }
 
     public function update(Request $request, Response $response): Response
     {
-        return new TextResponse("Help Me Abstract!");
+        return new TextResponse('Help Me Abstract!');
     }
 
     public function delete(Request $request, Response $response): Response
     {
-        return new TextResponse("Help Me Abstract!");
+        return new TextResponse('Help Me Abstract!');
     }
 }

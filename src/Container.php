@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
@@ -10,16 +11,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Whoops\Run;
 use Whoops\Handler;
+use Whoops\Run;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
 /**
- * Class Container
- *
- * @package HelpMeAbstract
+ * Class Container.
  */
 final class Container extends \League\Container\Container
 {
@@ -42,12 +41,13 @@ final class Container extends \League\Container\Container
 
         $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
 
-        $this->share(Run::class, function (){
+        $this->share(Run::class, function () {
             $whoops = new Run();
             $whoops->pushHandler(new Handler\PrettyPageHandler());
             $jsonHandler = new Handler\JsonResponseHandler();
             $jsonHandler->addTraceToOutput(true);
             $whoops->pushHandler($jsonHandler);
+
             return $whoops;
         });
     }
