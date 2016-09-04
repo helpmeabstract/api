@@ -7,6 +7,6 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www
 
-ONBUILD COPY src html compoer.json /var/www
+ONBUILD COPY src html composer.json /var/www
 ONBUILD COPY /scripts/install_composer
 ONBUILD RUN php /tmp/install_composer.php && composer install && composer dump-autoload -o
