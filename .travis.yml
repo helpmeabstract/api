@@ -1,6 +1,8 @@
 language: php
 
 sudo: false
+services:
+  - docker
 
 env:
   global:
@@ -17,9 +19,10 @@ cache:
     - $HOME/.php-cs-fixer
 
 before_install:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
   - composer self-update
   - composer validate
-
 
 install:
   - composer install
