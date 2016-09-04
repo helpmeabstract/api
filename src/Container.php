@@ -36,7 +36,7 @@ final class Container extends \League\Container\Container
             }
         );
 
-        $this->share(Environment::class, function() : Environment{
+        $this->share(Environment::class, function () : Environment {
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
 

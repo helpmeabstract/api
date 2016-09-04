@@ -11,7 +11,7 @@ class Environment
     const PRODUCTION = 'production';
 
     /**
-     * @var string $type
+     * @var string
      */
     private $type;
 

@@ -10,22 +10,20 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 class EntityManagerServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        ORM\EntityManager::class
+        ORM\EntityManager::class,
     ];
 
     /**
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {
         $this->container->share(ORM\EntityManager::class, function () {
             $environment = $this->container->get(Environment::class);
 
-            $entityDirectory = __DIR__ . "/../Entities";
+            $entityDirectory = __DIR__ . '/../Entities';
             $proxyDirectory = __DIR__ . '/../proxies/';
 
             $cache = ($environment->isTesting())
