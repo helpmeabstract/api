@@ -8,8 +8,6 @@ RUN php /tmp/install_composer.php
 
 RUN chown -R www-data:www-data /var/www
 WORKDIR /var/www
-COPY composer.json ./composer.json
-COPY src ./src/
-COPY html ./html/
-RUN composer dump-autoload -o
 
+ONBUILD COPY src html compoer.json /var/www
+ONBUILD RUN composer dump-autoload -o
