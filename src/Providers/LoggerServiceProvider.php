@@ -7,10 +7,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Monolog\Processor\IntrospectionProcessor;
-use Monolog\Processor\MemoryPeakUsageProcessor;
-use Monolog\Processor\MemoryUsageProcessor;
-use Monolog\Processor\WebProcessor;
+use Monolog\Processor;
 use Psr\Log\LoggerInterface;
 
 class LoggerServiceProvider extends AbstractServiceProvider
@@ -31,10 +28,10 @@ class LoggerServiceProvider extends AbstractServiceProvider
             function () : LoggerInterface {
                 $handler = new StreamHandler('php://stdout');
                 $handler->setFormatter(new JsonFormatter());
-                $handler->pushProcessor(new WebProcessor());
-                $handler->pushProcessor(new MemoryUsageProcessor());
-                $handler->pushProcessor(new MemoryPeakUsageProcessor());
-                $handler->pushProcessor(new IntrospectionProcessor());
+                $handler->pushProcessor(new Processor\WebProcessor());
+                $handler->pushProcessor(new Processor\MemoryUsageProcessor());
+                $handler->pushProcessor(new Processor\MemoryPeakUsageProcessor());
+                $handler->pushProcessor(new Processor\IntrospectionProcessor());
 
                 return new Logger("hma", [$handler]);
             }

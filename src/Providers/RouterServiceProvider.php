@@ -31,7 +31,7 @@ class RouterServiceProvider extends AbstractServiceProvider
                 $router->group(
                     '/users',
                     function (RouteGroup $userRouter) {
-                        $userRouter->map('GET', '/', [$this->container->get(User::class), 'list']);
+                        $userRouter->get('/', [$this->container->get(User::class), 'list']);
                     }
                 );
 

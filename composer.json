@@ -12,7 +12,9 @@
     "league/route": "^2.0",
     "league/container": "^2.2",
     "zendframework/zend-diactoros": "^1.3",
-    "monolog/monolog": "^1.21"
+    "monolog/monolog": "^1.21",
+    "filp/whoops": "^2.1",
+    "shrikeh/teapot": "^2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.5",

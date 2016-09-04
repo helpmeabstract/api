@@ -23,4 +23,6 @@ class User implements LoggerAwareInterface
         $this->logger->alert("Look, ma! I'm loggin'!");
         return new TextResponse("Help Me Abstract!");
     }
+
+
 }
