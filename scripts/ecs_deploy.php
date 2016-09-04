@@ -18,12 +18,21 @@ Assertion::string($aws_region);
 Assertion::string($cluster);
 Assertion::string($task_family);
 
+$aws_options =     [
+    'region' => $aws_region,
+    'version' => '2014-11-13',
+];
+
+
+if (getenv('AWS_ACCESS_KEY') && getenv('AWS_SECRET_ACCESS_KEY')) {
+    $aws_options['AWS_ACCESS_KEY'] = getenv('AWS_ACCESS_KEY');
+    $aws_options['AWS_SECRET_ACCESS_KEY'] = getenv('AWS_SECRET_ACCESS_KEY');
+} else {
+    $aws_options['profile'] = $aws_profile;
+}
+
 $client = EcsClient::factory(
-    [
-        'profile' => $aws_profile,
-        'region' => $aws_region,
-        'version' => '2014-11-13',
-    ]
+    $aws_options
 );
 
 $definition = $client->describeTaskDefinition(['taskDefinition' => $task_family])->toArray();
