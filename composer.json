@@ -19,10 +19,10 @@
     "league/route": "^2.0",
     "monolog/monolog": "^1.21",
     "shrikeh/teapot": "^2.1",
+    "aws/aws-sdk-php": "^3.19",
     "zendframework/zend-diactoros": "^1.3"
   },
   "require-dev": {
-    "aws/aws-sdk-php": "^3.19",
     "phpunit/phpunit": "^5.5",
     "refinery29/php-cs-fixer-config": "^0.4.20",
     "refinery29/test-util": "^0.8.3",
