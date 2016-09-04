@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace HelpMeAbstract\Providers;
 
@@ -18,8 +19,6 @@ class LoggerServiceProvider extends AbstractServiceProvider
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {
@@ -33,7 +32,7 @@ class LoggerServiceProvider extends AbstractServiceProvider
                 $handler->pushProcessor(new Processor\MemoryPeakUsageProcessor());
                 $handler->pushProcessor(new Processor\IntrospectionProcessor());
 
-                return new Logger("hma", [$handler]);
+                return new Logger('hma', [$handler]);
             }
         );
     }

@@ -28,13 +28,4 @@ class Submission
     {
         $this->revisions->add($revision);
     }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function __call($name)
-    {
-        return $this->revisions->$name;
-    }
 }

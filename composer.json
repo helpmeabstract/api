@@ -1,5 +1,6 @@
 {
   "name": "helpmeabstract/api",
+  "description": "Help Me Abstract Application",
   "license": "MIT",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -9,6 +10,7 @@
     }
   },
   "require": {
+    "php": "^7.0",
     "beberlei/assert": "^2.6",
     "doctrine/migrations": "^1.4",
     "doctrine/orm": "^2.5",

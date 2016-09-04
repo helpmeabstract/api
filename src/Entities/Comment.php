@@ -19,9 +19,9 @@ class Comment
     private $hasBeenEdited = false;
 
     /**
-     * @param User $user
+     * @param User     $user
      * @param Revision $revision
-     * @param string $body
+     * @param string   $body
      */
     public function __construct(User $user, Revision $revision, string $body)
     {

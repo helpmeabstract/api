@@ -1,6 +1,6 @@
 <?php
 /**
- * Dat bootstrapper doe
+ * Dat bootstrapper doe.
  */
 require __DIR__ . '/../vendor/autoload.php';
 

@@ -77,7 +77,7 @@ class User
 
     public function getReviews()
     {
-        return $this->comments->filter(function(Comment $comment){
+        return $this->comments->filter(function (Comment $comment) {
             return $comment->getUser()->getId() !== $this->getId();
         });
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HelpMeAbstract\Providers;
 
 use HelpMeAbstract\Controllers\User;
@@ -10,7 +9,6 @@ use League\Route\RouteGroup;
 
 class RouterServiceProvider extends AbstractServiceProvider
 {
-
     protected $provides = [
         RouteCollection::class,
     ];
@@ -19,8 +17,6 @@ class RouterServiceProvider extends AbstractServiceProvider
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {

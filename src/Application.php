@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
@@ -9,7 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Whoops\Run;
-use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
 final class Application
@@ -25,7 +25,7 @@ final class Application
 
         $this->container->get(Run::class)->register();
 
-        try{
+        try {
             $response = $router->dispatch(
                 $this->container->get(ServerRequestInterface::class),
                 $this->container->get(ResponseInterface::class)
