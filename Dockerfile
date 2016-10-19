@@ -1,16 +1,15 @@
 FROM php:7-apache
+
 RUN apt-get update && apt-get install -y zlib1g-dev git && apt-get clean && apt-get autoremove
+
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 
-COPY /scripts/install_composer.php /tmp
-RUN php /tmp/install_composer.php
-
-RUN chown -R www-data:www-data /var/www
 WORKDIR /var/www
-COPY composer.json ./composer.json
-COPY src ./src/
-COPY html ./html/
-RUN composer dump-autoload -o
 
+ONBUILD COPY src html composer.json /var/www
+ONBUILD COPY ./scripts/entrypoint.sh /var/www/scripts/entrypoint.sh
+
+ONBUILD COPY ./scripts/install_composer /tmp
+ONBUILD RUN php /tmp/install_composer.php && composer install && composer dump-autoload -o

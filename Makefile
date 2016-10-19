@@ -6,7 +6,9 @@ ecr-login:
 	$(DOCKER_LOGIN)
 
 build-container:
-	docker build -t helpmeabstract/api .
+	docker build -t helpmeabstract/api:base .
+	@echo "FROM helpmeabstract/api:base" > Dockerfile.distrib
+	docker build -t helpmeabstract/api:latest -f Dockerfile.distrib .
 
 tag-container: ecr-login build-container
 	@echo Tagging current container state in ECR
