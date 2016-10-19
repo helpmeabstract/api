@@ -3,18 +3,30 @@
 namespace HelpMeAbstract\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
-use HelpMeAbstract\Entity\Behavior\HasId;
+use HelpMeAbstract\Entity\Behavior\HasUuid;
+use Ramsey\Uuid\Uuid;
 
+/**
+ * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\RevisionRepository")
+ * @ORM\Table( name="revisions")
+ *
+ * @ORM\HasLifecycleCallbacks
+ */
 class Revision
 {
-    use HasId;
     use HasCreatedDate;
+    use HasUuid;
 
     /**
-     * @var int
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @var Uuid
      */
-    private $abstractId;
+    private $submissionIdentifier;
 
     /**
      * @var User
@@ -31,15 +43,15 @@ class Revision
         $this->comments = new ArrayCollection();
 
         $this->user = $user;
-        $this->abstractId = $abstractId ?: rand();
+        $this->submissionIdentifier = $abstractId ?: rand();
     }
 
     /**
      * @return int
      */
-    public function getAbstractId() : int
+    public function getSubmissionIdentifier() : int
     {
-        return $this->abstractId;
+        return $this->submissionIdentifier;
     }
 
     /**
