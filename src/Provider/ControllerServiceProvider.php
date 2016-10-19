@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpMeAbstract\Providers;
+namespace HelpMeAbstract\Provider;
 
 use HelpMeAbstract\Controllers\User;
 use League\Container\ServiceProvider\AbstractServiceProvider;

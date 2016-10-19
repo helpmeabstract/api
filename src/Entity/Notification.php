@@ -1,10 +1,9 @@
 <?php
 
-namespace HelpMeAbstract\Entities;
+namespace HelpMeAbstract\Entity;
 
-use Assert\Assertion;
-use HelpMeAbstract\Entities\Behavior\HasCreatedDate;
-use HelpMeAbstract\Entities\Behavior\HasId;
+use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
+use HelpMeAbstract\Entity\Behavior\HasId;
 
 class Notification
 {

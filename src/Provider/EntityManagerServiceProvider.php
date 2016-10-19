@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpMeAbstract\Providers;
+namespace HelpMeAbstract\Provider;
 
 use Doctrine\Common;
 use Doctrine\ORM;
@@ -23,7 +23,7 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
         $this->container->share(ORM\EntityManager::class, function () {
             $environment = $this->container->get(Environment::class);
 
-            $entityDirectory = __DIR__ . '/../Entities';
+            $entityDirectory = __DIR__ . '/../Entity';
             $proxyDirectory = __DIR__ . '/../proxies/';
 
             $cache = ($environment->isTesting())

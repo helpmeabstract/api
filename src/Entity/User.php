@@ -1,9 +1,9 @@
 <?php
 
-namespace HelpMeAbstract\Entities;
+namespace HelpMeAbstract\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use HelpMeAbstract\Entities\Behavior\HasId;
+use HelpMeAbstract\Entity\Behavior\HasId;
 
 class User
 {

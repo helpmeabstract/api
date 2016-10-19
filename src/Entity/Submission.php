@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpMeAbstract\Entities;
+namespace HelpMeAbstract\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
