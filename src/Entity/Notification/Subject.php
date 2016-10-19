@@ -2,7 +2,7 @@
 
 namespace HelpMeAbstract\Entity\Notification;
 
-interface Resource
+interface Subject
 {
 
 }

@@ -5,7 +5,7 @@ namespace HelpMeAbstract\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
 use HelpMeAbstract\Entity\Behavior\HasId;
-use HelpMeAbstract\Entity\Notification\Resource;
+use HelpMeAbstract\Entity\Notification\Subject;
 
 /**
  * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\NotificationRepository")
@@ -75,16 +75,16 @@ abstract class Notification
     /**
      * @var Resource
      */
-    private $resource;
+    private $subject;
 
     /**
      * @param User     $user
-     * @param Resource $resource
+     * @param Subject $subject
      */
-    public function __construct(User $user, Resource $resource)
+    public function __construct(User $user, Subject $subject)
     {
         $this->user = $user;
-        $this->resource = $resource;
+        $this->subject = $subject;
     }
 
     public function markRead()
