@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
-use HelpMeAbstract\Providers\ControllerServiceProvider;
-use HelpMeAbstract\Providers\EntityManagerServiceProvider;
-use HelpMeAbstract\Providers\LoggerServiceProvider;
-use HelpMeAbstract\Providers\RouterServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -40,10 +36,10 @@ final class Container extends \League\Container\Container
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
 
-        $this->addServiceProvider(new LoggerServiceProvider());
-        $this->addServiceProvider(new RouterServiceProvider());
-        $this->addServiceProvider(new EntityManagerServiceProvider());
-        $this->addServiceProvider(new ControllerServiceProvider());
+        $this->addServiceProvider(new Provider\LoggerServiceProvider());
+        $this->addServiceProvider(new Provider\RouterServiceProvider());
+        $this->addServiceProvider(new Provider\EntityManagerServiceProvider());
+        $this->addServiceProvider(new Provider\ControllerServiceProvider());
 
         $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
 

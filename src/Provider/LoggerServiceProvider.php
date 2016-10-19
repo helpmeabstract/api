@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpMeAbstract\Providers;
+namespace HelpMeAbstract\Provider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Monolog\Formatter\JsonFormatter;

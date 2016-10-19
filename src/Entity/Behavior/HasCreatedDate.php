@@ -1,9 +1,18 @@
 <?php
 
-namespace HelpMeAbstract\Entities\Behavior;
+namespace HelpMeAbstract\Entity\Behavior;
 
 trait HasCreatedDate
 {
+    /**
+     * @ORM\Column(
+     *     type="datetime",
+     *     name="created",
+     *     nullable=false
+     * )
+     *
+     * @var \DateTime
+     */
     private $createdDate;
 
     public function updateCreatedDate()

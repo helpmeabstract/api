@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpMeAbstract\Providers;
+namespace HelpMeAbstract\Provider;
 
 use HelpMeAbstract\Controllers\User;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -32,6 +32,8 @@ class RouterServiceProvider extends AbstractServiceProvider
                         $userRouter->put('/{id:number}', [$this->container->get(User::class), 'update']);
                         $userRouter->get('/{id:number}', [$this->container->get(User::class), 'get']);
                         $userRouter->delete('/{id:number}', [$this->container->get(User::class), 'delete']);
+
+                        $userRouter->post('/{id:number}/submissions/', [$this->container->get(User::class), 'createSubmission']);
                     }
                 );
 

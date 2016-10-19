@@ -8,7 +8,7 @@ use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 
 $container = new \HelpMeAbstract\Container();
-$container->addServiceProvider(new \HelpMeAbstract\Providers\EntityManagerServiceProvider());
+$container->addServiceProvider(new \HelpMeAbstract\Provider\EntityManagerServiceProvider());
 
 $entityManager = $container->get(EntityManager::class);
 
