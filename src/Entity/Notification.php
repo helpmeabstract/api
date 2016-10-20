@@ -73,12 +73,12 @@ abstract class Notification
     private $user;
 
     /**
-     * @var Resource
+     * @var resource
      */
     private $subject;
 
     /**
-     * @param User     $user
+     * @param User    $user
      * @param Subject $subject
      */
     public function __construct(User $user, Subject $subject)
