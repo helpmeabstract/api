@@ -2,41 +2,70 @@
 
 namespace HelpMeAbstract\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
 use HelpMeAbstract\Entity\Behavior\HasId;
+use HelpMeAbstract\Entity\Notification\Subject;
 
-class Notification
+/**
+ * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\NotificationRepository")
+ * @ORM\Table( name="notifications")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "comment" = "HelpMeAbstract\Entity\Notification\CommentNotification",
+ *     "submission" = "HelpMeAbstract\Entity\Notification\SubmissionNotification"
+ * })
+ *
+ * @ORM\HasLifecycleCallbacks
+ */
+abstract class Notification
 {
-    const TYPE_COMMENT_RECEIVED = 'comment_received';
-    const TYPE_SUBMISSION_SUBMITTED = 'submission_recieved';
-
     use HasId;
     use HasCreatedDate;
 
     /**
+     * @ORM\Column(
+     *     type="boolean",
+     *     name="has_been_read",
+     *     options={"default":false}
+     * )
+     *
      * @var bool
      */
     private $hasBeenRead = false;
 
     /**
-     * @var
+     * @ORM\Column(
+     *     type="datetime",
+     *     name="date_read"
+     * )
+     *
+     * @var \DateTime
      */
     private $dateRead;
 
     /**
+     * @ORM\Column(
+     *     type="boolean",
+     *     name="has_been_sent",
+     *     options={"default":false}
+     * )
+     *
      * @var bool
      */
     private $hasBeenSent = false;
 
     /**
-     * @var
+     * @ORM\Column(
+     *     type="datetime",
+     *     name="date_sent"
+     * )
+     *
+     * @var \DateTime
      */
     private $dateSent;
-
-    /**
-     * @var string
-     */
-    private $type;
 
     /**
      * @var User
@@ -46,20 +75,16 @@ class Notification
     /**
      * @var resource
      */
-    private $resource;
+    private $subject;
 
     /**
-     * @param User     $user
-     * @param resource $resource
-     * @param string   $type
+     * @param User    $user
+     * @param Subject $subject
      */
-    public function __construct(User $user, Resource $resource, string $type)
+    public function __construct(User $user, Subject $subject)
     {
-        Assertion::inArray($type, [self::TYPE_COMMENT_RECEIVED, self::TYPE_SUBMISSION_SUBMITTED]);
-
         $this->user = $user;
-        $this->resource = $resource;
-        $this->type = $type;
+        $this->subject = $subject;
     }
 
     public function markRead()
