@@ -39,6 +39,8 @@ final class Container extends \League\Container\Container
         $this->addServiceProvider(new Provider\LoggerServiceProvider());
         $this->addServiceProvider(new Provider\RouterServiceProvider());
         $this->addServiceProvider(new Provider\EntityManagerServiceProvider());
+        $this->addServiceProvider(new Provider\DBALMigrationConfigurationServiceProvider());
+        $this->addServiceProvider(new Provider\RepositoryServiceProvider());
         $this->addServiceProvider(new Provider\ControllerServiceProvider());
 
         $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
