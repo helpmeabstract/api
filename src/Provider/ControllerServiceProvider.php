@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract\Provider;
 
-use HelpMeAbstract\Controllers\User;
+use HelpMeAbstract\Controller;
+use HelpMeAbstract\Repository\UserRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ControllerServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        User::class,
+        Controller\Auth::class,
+        Controller\User::class,
+        Controller\Notification::class,
+        Controller\Submission::class,
+        Controller\Comment::class,
     ];
 
     /**
@@ -20,6 +25,15 @@ class ControllerServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(User::class);
+        $this->container->share(Controller\Auth::class);
+        $this->container->share(Controller\User::class, function () {
+            $userRepository = $this->container->get(UserRepository::class);
+
+            return new Controller\User($userRepository);
+        });
+        $this->container->share(Controller\Notification::class);
+        $this->container->share(Controller\Submission::class);
+
+        $this->container->share(Controller\Comment::class);
     }
 }
