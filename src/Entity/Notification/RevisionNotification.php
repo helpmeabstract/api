@@ -3,18 +3,18 @@
 namespace HelpMeAbstract\Entity\Notification;
 
 use Doctrine\ORM\Mapping as ORM;
-use HelpMeAbstract\Entity\Comment;
 use HelpMeAbstract\Entity\Notification;
+use HelpMeAbstract\Entity\Revision;
 
 /**
  * @ORM\Entity()
  */
-class CommentNotification extends Notification
+class RevisionNotification extends Notification
 {
     /**
-     * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\Comment")
+     * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\Revision")
      *
-     * @var Comment
+     * @var Revision
      */
     protected $subject;
 }

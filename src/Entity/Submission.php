@@ -3,17 +3,25 @@
 namespace HelpMeAbstract\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use HelpMeAbstract\Entity\Notification\Subject;
+use Ramsey\Uuid\Uuid;
 
-class Submission
+class Submission implements Subject
 {
+    /**
+     * @var Uuid
+     */
+    private $identifier;
+
     /**
      * @var Collection|Revision[]
      */
     private $revisions;
 
-    public function __construct(Collection $collection)
+    public function __construct(Uuid $identifier, Collection $collection)
     {
         $this->revisions = $collection;
+        $this->identifier = $identifier;
     }
 
     /**
@@ -27,5 +35,20 @@ class Submission
     public function addRevision(Revision $revision)
     {
         $this->revisions->add($revision);
+    }
+
+    public function getUrl() : string
+    {
+        // TODO: Implement getUrl() method.
+    }
+
+    public function getExcerpt() : string
+    {
+        // TODO: Implement getExcerpt() method.
+    }
+
+    public function getHeadline() : string
+    {
+        // TODO: Implement getHeadline() method.
     }
 }

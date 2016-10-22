@@ -4,7 +4,7 @@ namespace HelpMeAbstract\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
-use HelpMeAbstract\Entity\Behavior\HasId;
+use HelpMeAbstract\Entity\Behavior\HasUuid;
 use HelpMeAbstract\Entity\Notification\Subject;
 
 /**
@@ -15,67 +15,59 @@ use HelpMeAbstract\Entity\Notification\Subject;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "comment" = "HelpMeAbstract\Entity\Notification\CommentNotification",
- *     "submission" = "HelpMeAbstract\Entity\Notification\SubmissionNotification"
+ *     "submission" = "HelpMeAbstract\Entity\Notification\SubmissionNotification",
+ *     "revision" = "HelpMeAbstract\Entity\Notification\RevisionNotification"
  * })
  *
  * @ORM\HasLifecycleCallbacks
  */
 abstract class Notification
 {
-    use HasId;
+    const STATUS_PENDING = 'pending';
+    const STATUS_QUEUED = 'queued';
+    const STATUS_SENT = 'sent';
+    const STATUS_READ = 'read';
+
+    use HasUuid;
     use HasCreatedDate;
 
     /**
      * @ORM\Column(
-     *     type="boolean",
-     *     name="has_been_read",
-     *     options={"default":false}
-     * )
-     *
-     * @var bool
-     */
-    private $hasBeenRead = false;
-
-    /**
-     * @ORM\Column(
      *     type="datetime",
-     *     name="date_read"
+     *     name="date_sent",
+     *     nullable=true
      * )
      *
      * @var \DateTime
      */
-    private $dateRead;
-
-    /**
-     * @ORM\Column(
-     *     type="boolean",
-     *     name="has_been_sent",
-     *     options={"default":false}
-     * )
-     *
-     * @var bool
-     */
-    private $hasBeenSent = false;
+    protected $dateSent;
 
     /**
      * @ORM\Column(
      *     type="datetime",
-     *     name="date_sent"
+     *     name="date_read",
+     *     nullable=true
      * )
      *
      * @var \DateTime
      */
-    private $dateSent;
+    protected $dateRead;
 
     /**
+     * @ORM\Column(
+     *     type="string"
+     * )
+     *
+     * @var string
+     */
+    protected $status = self::STATUS_PENDING;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\User", inversedBy="notifications")
+     *
      * @var User
      */
-    private $user;
-
-    /**
-     * @var resource
-     */
-    private $subject;
+    protected $recipient;
 
     /**
      * @param User    $user
@@ -83,25 +75,46 @@ abstract class Notification
      */
     public function __construct(User $user, Subject $subject)
     {
-        $this->user = $user;
+        $this->recipient = $user;
         $this->subject = $subject;
     }
 
     public function markRead()
     {
-        $this->hasBeenRead = true;
         $this->dateRead = new \DateTime();
+        $this->status = self::STATUS_READ;
     }
 
     public function markUnread()
     {
-        $this->hasBeenRead = false;
         $this->dateRead = null;
+        $this->status = self::STATUS_SENT;
     }
 
     public function markSent()
     {
-        $this->hasBeenSent = true;
         $this->dateSent = new \DateTime();
+        $this->status = self::STATUS_SENT;
+    }
+
+    public function markQueued()
+    {
+        $this->status = self::STATUS_QUEUED;
+    }
+
+    /**
+     * @return Subject
+     */
+    public function getSubject() : Subject
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @return User
+     */
+    public function getRecipient() : User
+    {
+        return $this->recipient;
     }
 }
