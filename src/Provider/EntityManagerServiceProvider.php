@@ -3,9 +3,13 @@
 namespace HelpMeAbstract\Provider;
 
 use Doctrine\Common;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use HelpMeAbstract\Environment;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Symfony\Component\Console\Helper\HelperSet;
 
 class EntityManagerServiceProvider extends AbstractServiceProvider
 {
@@ -26,9 +30,9 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
             $entityDirectory = __DIR__ . '/../Entity';
             $proxyDirectory = __DIR__ . '/../proxies/';
 
-            $cache = ($environment->isTesting())
-                ? new Common\Cache\ArrayCache()
-                : new Common\Cache\ApcuCache();
+            Type::addType('uuid', 'Ramsey\Uuid\Doctrine\UuidType');
+
+            $cache = new Common\Cache\ArrayCache();
 
             $config = new ORM\Configuration();
             $annotationDriver = $config->newDefaultAnnotationDriver($entityDirectory, false);
@@ -52,6 +56,15 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
                 'dbname' => 'helpmeabstract',             ];
 
             return  ORM\EntityManager::create($dbParams, $config);
+        });
+
+        $this->container->share(HelperSet::class, function () {
+            $entityManager = $this->container->get(ORM\EntityManager::class);
+
+            return new HelperSet([
+                'db' => new ConnectionHelper($entityManager->getConnection()),
+                'em' => new EntityManagerHelper($entityManager),
+            ]);
         });
     }
 }

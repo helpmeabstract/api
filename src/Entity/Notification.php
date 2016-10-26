@@ -2,81 +2,119 @@
 
 namespace HelpMeAbstract\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
-use HelpMeAbstract\Entity\Behavior\HasId;
+use HelpMeAbstract\Entity\Behavior\HasUuid;
+use HelpMeAbstract\Entity\Notification\Subject;
 
-class Notification
+/**
+ * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\NotificationRepository")
+ * @ORM\Table( name="notifications")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "comment" = "HelpMeAbstract\Entity\Notification\CommentNotification",
+ *     "submission" = "HelpMeAbstract\Entity\Notification\SubmissionNotification",
+ *     "revision" = "HelpMeAbstract\Entity\Notification\RevisionNotification"
+ * })
+ *
+ * @ORM\HasLifecycleCallbacks
+ */
+abstract class Notification
 {
-    const TYPE_COMMENT_RECEIVED = 'comment_received';
-    const TYPE_SUBMISSION_SUBMITTED = 'submission_recieved';
+    const STATUS_PENDING = 'pending';
+    const STATUS_QUEUED = 'queued';
+    const STATUS_SENT = 'sent';
+    const STATUS_READ = 'read';
 
-    use HasId;
+    use HasUuid;
     use HasCreatedDate;
 
     /**
-     * @var bool
+     * @ORM\Column(
+     *     type="datetime",
+     *     name="date_sent",
+     *     nullable=true
+     * )
+     *
+     * @var \DateTime
      */
-    private $hasBeenRead = false;
+    protected $dateSent;
 
     /**
-     * @var
+     * @ORM\Column(
+     *     type="datetime",
+     *     name="date_read",
+     *     nullable=true
+     * )
+     *
+     * @var \DateTime
      */
-    private $dateRead;
+    protected $dateRead;
 
     /**
-     * @var bool
-     */
-    private $hasBeenSent = false;
-
-    /**
-     * @var
-     */
-    private $dateSent;
-
-    /**
+     * @ORM\Column(
+     *     type="string"
+     * )
+     *
      * @var string
      */
-    private $type;
+    protected $status = self::STATUS_PENDING;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\User", inversedBy="notifications")
+     *
      * @var User
      */
-    private $user;
+    protected $recipient;
 
     /**
-     * @var resource
+     * @param User    $user
+     * @param Subject $subject
      */
-    private $resource;
-
-    /**
-     * @param User     $user
-     * @param resource $resource
-     * @param string   $type
-     */
-    public function __construct(User $user, Resource $resource, string $type)
+    public function __construct(User $user, Subject $subject)
     {
-        Assertion::inArray($type, [self::TYPE_COMMENT_RECEIVED, self::TYPE_SUBMISSION_SUBMITTED]);
-
-        $this->user = $user;
-        $this->resource = $resource;
-        $this->type = $type;
+        $this->recipient = $user;
+        $this->subject = $subject;
     }
 
     public function markRead()
     {
-        $this->hasBeenRead = true;
         $this->dateRead = new \DateTime();
+        $this->status = self::STATUS_READ;
     }
 
     public function markUnread()
     {
-        $this->hasBeenRead = false;
         $this->dateRead = null;
+        $this->status = self::STATUS_SENT;
     }
 
     public function markSent()
     {
-        $this->hasBeenSent = true;
         $this->dateSent = new \DateTime();
+        $this->status = self::STATUS_SENT;
+    }
+
+    public function markQueued()
+    {
+        $this->status = self::STATUS_QUEUED;
+    }
+
+    /**
+     * @return Subject
+     */
+    public function getSubject() : Subject
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @return User
+     */
+    public function getRecipient() : User
+    {
+        return $this->recipient;
     }
 }
