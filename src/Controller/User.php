@@ -49,12 +49,12 @@ class User implements LoggerAwareInterface
         return new TextResponse('Help Me Abstract!');
     }
 
-    public function update(Request $request, Response $response): Response
+    public function update(Request $request, Response $response, array $vars): Response
     {
         return new TextResponse('Help Me Abstract!');
     }
 
-    public function delete(Request $request, Response $response): Response
+    public function delete(Request $request, Response $response, array $vars): Response
     {
         return new TextResponse('Help Me Abstract!');
     }
