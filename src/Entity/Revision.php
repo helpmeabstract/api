@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @ORM\HasLifecycleCallbacks
  */
-class Revision
+class Revision implements Subject
 {
     use HasCreatedDate;
     use HasUuid;
@@ -65,7 +65,7 @@ class Revision
     }
 
     /**
-     * @return {
+     * @return Uuid
      */
     public function getSubmissionIdentifier() : Uuid
     {

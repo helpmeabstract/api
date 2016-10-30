@@ -41,5 +41,4 @@ class Submission implements LoggerAwareInterface
     {
         return new TextResponse('Help Me Abstract!');
     }
-
 }

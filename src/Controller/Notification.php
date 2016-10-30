@@ -26,5 +26,4 @@ class Notification implements LoggerAwareInterface
     {
         return new TextResponse('Help Me Abstract!');
     }
-
 }
