@@ -38,9 +38,9 @@ class RouterServiceProvider extends AbstractServiceProvider
                         $userRouter->delete('/{id:number}', [$userController, 'delete']);
 
                         $userRouter->post('/{id:number}/submissions', [$submissionController, 'create']);
-                        $userRouter->get('/{id:number}/submissions', [$submissionController, 'list']);
+                        $userRouter->get('/{id:number}/submissions', [$submissionController, 'listForUser']);
 
-                        $userRouter->get('/{id:number}/notifications', [$notificationController, 'list']);
+                        $userRouter->get('/{id:number}/notifications', [$notificationController, 'listForUser']);
                     }
                 );
 
@@ -59,28 +59,31 @@ class RouterServiceProvider extends AbstractServiceProvider
                         $submissionRoute->get('/{id:number}', [$submissionController, 'get']);
                         $submissionRoute->put('/{id:number}', [$submissionController, 'update']);
                         $submissionRoute->delete('/{id:number}', [$submissionController, 'delete']);
+
+                        $commentController = $this->container->get(Controller\Comment::class);
+                        $submissionRoute->post('/{id:number}/comments', [$commentController, 'create']);
                     }
                 );
 
                 $router->group(
                     '/comments',
-                    function (RouteGroup $submissionRoute) {
+                    function (RouteGroup $commentRouter) {
                         $commentController = $this->container->get(Controller\Comment::class);
 
-                        $submissionRoute->delete('/{id:number}', [$commentController, 'delete']);
-                        $submissionRoute->put('/{id:number}', [$commentController, 'update']);
+                        $commentRouter->delete('/{id:number}', [$commentController, 'delete']);
+                        $commentRouter->put('/{id:number}', [$commentController, 'update']);
                     }
                 );
 
                 $commentController = $this->container->get(Controller\Comment::class);
                 $submissionController = $this->container->get(Controller\Submission::class);
 
-                $router->get('/submissions', [$submissionController, 'get']);
-                $router->get('/comments', [$commentController, 'get']);
+                $router->get('/submissions', [$submissionController, 'list']);
+                $router->get('/comments', [$commentController, 'list']);
 
                 $authController = $this->container->get(Controller\Auth::class);
                 $router->post('/login', [$authController, 'login']);
-                $router->post('/logout', [$authController, 'logout']);
+                $router->get('/logout', [$authController, 'logout']);
 
                 return $router;
             }

@@ -65,9 +65,9 @@ class Revision implements Subject
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getSubmissionIdentifier() : int
+    public function getSubmissionIdentifier() : Uuid
     {
         return $this->submissionIdentifier;
     }
