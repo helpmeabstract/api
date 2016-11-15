@@ -117,4 +117,28 @@ abstract class Notification
     {
         return $this->recipient;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateSent():\DateTime
+    {
+        return $this->dateSent;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateRead():\DateTime
+    {
+        return $this->dateRead;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus() :string
+    {
+        return $this->status;
+    }
 }
