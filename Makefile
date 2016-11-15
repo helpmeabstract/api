@@ -21,3 +21,6 @@ deploy-container: ecr-login tag-container
 deploy-staging: deploy-container
 	@echo Deploying to staging
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
+
+cs:
+	vendor/bin/php-cs-fixer fix --config=.php_cs
