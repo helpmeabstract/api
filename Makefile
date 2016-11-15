@@ -21,3 +21,6 @@ deploy-container: ecr-login tag-container
 deploy-staging: deploy-container
 	@echo Deploying to staging
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
+
+run-local-migrations: build-container
+	docker run -i --rm -w /var/www --sig-proxy=true --pid=host -v `pwd`:/var/www --network="api_default" -e "MYSQL_USER=helpmeabstract" -e "MYSQL_PASSWORD=securelol" helpmeabstract/api bin/console migrations:migrate
