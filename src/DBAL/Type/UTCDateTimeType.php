@@ -29,7 +29,7 @@ class UTCDateTimeType extends DateTimeType
             new \DateTimeZone('UTC')
         );
 
-        if (! $converted) {
+        if (!$converted) {
             throw ConversionException::conversionFailedFormat(
                 $value,
                 $this->getName(),
