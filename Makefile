@@ -1,5 +1,8 @@
 AWS_REGION="us-east-1"
 AWS_PROFILE="default"
+MYSQL_USER=helpmeabstract
+MYSQL_PASSWORD=securelol
+MYSQL_HOSTNAME=127.0.0.1
 DOCKER_LOGIN=$(shell aws ecr get-login --region=$(AWS_REGION) --profile=$(AWS_PROFILE))
 ecr-login:
 	@echo Getting an ECR Login Token
@@ -22,5 +25,8 @@ deploy-staging: deploy-container
 	@echo Deploying to staging
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
 
-run-local-migrations: build-container
-	docker run -i --rm -w /var/www --sig-proxy=true --pid=host -v `pwd`:/var/www --network="api_default" -e "MYSQL_USER=helpmeabstract" -e "MYSQL_PASSWORD=securelol" helpmeabstract/api bin/console migrations:migrate
+run-local-migrations:
+	export MYSQL_USER=$(MYSQL_USER)
+	export MYSQL_PASSWORD=$(MYSQL_PASSWORD)
+	export MYSQL_HOSTNAME=$(MYSQL_HOSTNAME)
+	bin/console migrations:migrate

@@ -49,11 +49,12 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
             }
 
             $dbParams = [
-                'driver' => 'mysqli',
+                'driver' => 'pdo_mysql',
                 'user' => getenv('MYSQL_USER'),
                 'password' => getenv('MYSQL_PASSWORD'),
-                'host' => 'db',
-                'dbname' => 'helpmeabstract',             ];
+                'host' => getenv('MYSQL_HOSTNAME') ?: 'db',
+                'dbname' => getenv('MYSQL_DATABASE') ?: 'helpmeabstract',
+            ];
 
             return  ORM\EntityManager::create($dbParams, $config);
         });

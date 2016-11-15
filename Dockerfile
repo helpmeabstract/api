@@ -3,7 +3,7 @@ FROM php:7-apache
 RUN apt-get update && apt-get install -y zlib1g-dev git && apt-get clean && apt-get autoremove
 
 RUN docker-php-ext-install zip
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 
 WORKDIR /var/www
