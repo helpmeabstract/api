@@ -37,6 +37,14 @@ class Submission implements Subject
         $this->revisions->add($revision);
     }
 
+    /**
+     * @return User
+     */
+    public function getAuthor() : User
+    {
+        return $this->revisions->first()->getAuthor();
+    }
+
     public function getUrl() : string
     {
         // TODO: Implement getUrl() method.
@@ -50,5 +58,13 @@ class Submission implements Subject
     public function getHeadline() : string
     {
         // TODO: Implement getHeadline() method.
+    }
+
+    /**
+     * @return Uuid
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 }
