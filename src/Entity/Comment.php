@@ -118,4 +118,12 @@ class Comment implements Subject
     {
         // TODO: Implement getHeadline() method.
     }
+
+    /**
+     * @return bool
+     */
+    public function hasBeenEdited() : bool
+    {
+        return $this->hasBeenEdited;
+    }
 }

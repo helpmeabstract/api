@@ -30,3 +30,7 @@ run-local-migrations:
 	export MYSQL_PASSWORD=$(MYSQL_PASSWORD)
 	export MYSQL_HOSTNAME=$(MYSQL_HOSTNAME)
 	bin/console migrations:migrate
+
+cs:
+	vendor/bin/php-cs-fixer fix --config=.php_cs
+

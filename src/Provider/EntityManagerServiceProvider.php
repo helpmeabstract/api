@@ -7,6 +7,7 @@ use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use HelpMeAbstract\DBAL\Type\UTCDateTimeType;
 use HelpMeAbstract\Environment;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -31,6 +32,9 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
             $proxyDirectory = __DIR__ . '/../proxies/';
 
             Type::addType('uuid', 'Ramsey\Uuid\Doctrine\UuidType');
+
+            Type::overrideType('datetime', UTCDateTimeType::class);
+            Type::overrideType('datetimetz', UTCDateTimeType::class);
 
             $cache = new Common\Cache\ArrayCache();
 
