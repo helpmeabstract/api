@@ -54,7 +54,7 @@ class Comment
     /**
      * @param User     $user
      * @param Revision $revision
-     * @param Snippet   $snippet
+     * @param Snippet  $snippet
      */
     public function __construct(User $user, Revision $revision, Snippet $snippet)
     {

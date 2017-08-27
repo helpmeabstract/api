@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Output;
-
 
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -12,7 +10,7 @@ use League\Fractal\TransformerAbstract;
 
 trait CreatesFractalScope
 {
-    /** @var  Manager */
+    /** @var Manager */
     protected $manager;
 
     public function setManager(Manager $manager)

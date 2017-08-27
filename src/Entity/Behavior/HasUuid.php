@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HelpMeAbstract\Entity\Behavior;
 
 use Ramsey\Uuid\Uuid;

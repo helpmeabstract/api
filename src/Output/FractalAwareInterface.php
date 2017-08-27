@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Output;
-
 
 use League\Fractal\Manager;
 

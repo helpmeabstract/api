@@ -14,7 +14,7 @@ class ControllerServiceProvider extends AbstractServiceProvider
     protected $provides = [
         Controller\User\GetAll::class,
         Controller\User\GetSingle::class,
-        Controller\Auth::class
+        Controller\Auth::class,
     ];
 
     /**
@@ -24,7 +24,7 @@ class ControllerServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(Controller\Auth::class, function(){
+        $this->container->share(Controller\Auth::class, function () {
             return new Controller\Auth(
                 $this->container->get(EntityManager::class),
                 $this->container->get(UserRepository::class)

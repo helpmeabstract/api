@@ -43,7 +43,6 @@ class Snippet
 
     public function __construct(string $body, int $startIndex, int $stopIndex)
     {
-
         $this->body = $body;
         $this->startIndex = $startIndex;
         $this->stopIndex = $stopIndex;

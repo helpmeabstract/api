@@ -36,7 +36,7 @@ final class Container extends \League\Container\Container
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
 
-        $this->share(Manager::class, function(){
+        $this->share(Manager::class, function () {
             return (new Manager())->setSerializer(new JsonApiSerializer());
         });
 
