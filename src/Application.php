@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
-use League\Route\Http\Exception\NotFoundException;
+use Assert\AssertionFailedException;
+use HelpMeAbstract\Middleware\CurrentUser;
+use HelpMeAbstract\Middleware\Router;
+use HelpMeAbstract\Repository\UserRepository;
+use HelpMeAbstract\Response\BadRequestResponse;
+use HelpMeAbstract\Response\NotAuthorizedResponse;
+use League\Route\Http\Exception\UnauthorizedException;
 use League\Route\RouteCollection;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Teapot\StatusCode;
 use Whoops\Run;
+use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
 final class Application
@@ -21,18 +26,21 @@ final class Application
 
     public function run()
     {
-        $router = $this->container->get(RouteCollection::class);
-
         $this->container->get(Run::class)->register();
 
         try {
-            $response = $router->dispatch(
+            $currentUser = new CurrentUser($this->container->get(UserRepository::class));
+            $response = $currentUser(
                 $this->container->get(ServerRequestInterface::class),
-                $this->container->get(ResponseInterface::class)
+                new Response(),
+                (new Router(
+                    $this->container->get(RouteCollection::class)
+                ))
             );
-        } catch (NotFoundException $exception) {
-            $response = $this->container->get(ResponseInterface::class)
-                ->withStatus(StatusCode::NOT_FOUND);
+        } catch (UnauthorizedException $e) {
+            $response = new NotAuthorizedResponse();
+        } catch (AssertionFailedException $e) {
+            $response = new BadRequestResponse([$e->getMessage()]);
         }
 
         $this->container->get(SapiEmitter::class)->emit($response);

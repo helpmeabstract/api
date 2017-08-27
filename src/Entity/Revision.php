@@ -20,6 +20,18 @@ class Revision
     use HasCreatedDate;
     use HasUuid;
 
+    const SESSION_TYPE_LIGHTNING = 'lightning';
+    const SESSION_TYPE_HALF_HOUR = 'half-hour';
+    const SESSION_TYPE_FULL_HOUR = 'full-hour';
+    const SESSION_TYPE_TUTORIAL = 'tutorial';
+
+    const VALID_SESSION_TYPES = [
+        self::SESSION_TYPE_LIGHTNING,
+        self::SESSION_TYPE_HALF_HOUR,
+        self::SESSION_TYPE_FULL_HOUR,
+        self::SESSION_TYPE_TUTORIAL,
+    ];
+
     /**
      * @ORM\Column(
      *      type="text"
@@ -31,8 +43,39 @@ class Revision
 
     /**
      * @ORM\Column(
+     *      type="text"
+     * )
+     *
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(
+     *      type="text",
+     *      name="session_type",
+     *      nullable=true
+     * )
+     *
+     * @var string
+     */
+    private $sessionType;
+
+    /**
+     * @ORM\Column(
+     *      type="integer",
+     *      name="max_characters",
+     *      nullable=true
+     * )
+     *
+     * @var int
+     */
+    private $maxCharacters;
+
+    /**
+     * @ORM\Column(
      *     type="uuid",
-     *     name="submission_identifier",
+     *     name="proposal_id",
      *     nullable=false
      * )
      * @ORM\GeneratedValue(strategy="CUSTOM")
@@ -40,7 +83,7 @@ class Revision
      *
      * @var Uuid
      */
-    private $submissionIdentifier;
+    private $proposalId;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\User")
@@ -57,21 +100,30 @@ class Revision
      */
     private $comments;
 
-    public function __construct(User $user, string $body, UuidInterface $submissionId = null)
-    {
+    public function __construct(
+        string $body,
+        string $title,
+        UuidInterface $submissionId,
+        User $user,
+        string $sessionType = null,
+        int $maxCharacters = null
+    ) {
         $this->comments = new ArrayCollection();
 
         $this->author = $user;
         $this->body = $body;
-        $this->submissionIdentifier = $submissionId ?: Uuid::uuid4();
+        $this->proposalId = $submissionId;
+        $this->title = $title;
+        $this->sessionType = $sessionType;
+        $this->maxCharacters = $maxCharacters;
     }
 
     /**
      * @return Uuid
      */
-    public function getSubmissionIdentifier() : Uuid
+    public function getProposalId() : Uuid
     {
-        return $this->submissionIdentifier;
+        return $this->proposalId;
     }
 
     /**
@@ -90,26 +142,59 @@ class Revision
         return $this->comments;
     }
 
-    public function getUrl()  : string
-    {
-        // TODO: Implement getUrl() method.
-    }
-
-    public function getExcerpt()  : string
-    {
-        // TODO: Implement getExcerpt() method.
-    }
-
-    public function getHeadline()  : string
-    {
-        // TODO: Implement getHeadline() method.
-    }
-
     /**
      * @return string
      */
     public function getBody(): string
     {
         return $this->body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSessionType()
+    {
+        return $this->sessionType;
+    }
+
+    /**
+     * @param int $sessionType
+     */
+    public function setSessionType($sessionType)
+    {
+        $this->sessionType = $sessionType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaxCharacters()
+    {
+        return $this->maxCharacters;
+    }
+
+    /**
+     * @param string $maxCharacters
+     */
+    public function setMaxCharacters($maxCharacters)
+    {
+        $this->maxCharacters = $maxCharacters;
     }
 }

@@ -3,6 +3,7 @@
 namespace HelpMeAbstract\Provider;
 
 use HelpMeAbstract\Controller;
+use HelpMeAbstract\HandlerStrategy;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -24,6 +25,7 @@ class RouterServiceProvider extends AbstractServiceProvider
             RouteCollection::class,
             function () : RouteCollection {
                 $router = new RouteCollection();
+                $router->setStrategy(new HandlerStrategy());
 
                 $router->get('/', $this->container->get(Controller\User\GetAll::class));
 
@@ -32,6 +34,25 @@ class RouterServiceProvider extends AbstractServiceProvider
                     function (RouteGroup $userRouter) {
                         $userRouter->get('/', $this->container->get(Controller\User\GetAll::class));
                         $userRouter->get('/{id}', $this->container->get(Controller\User\GetSingle::class));
+                    }
+                );
+
+                $router->group(
+                    '/proposals',
+                    function (RouteGroup $userRouter) {
+                        $userRouter->post('/', $this->container->get(Controller\Proposal\CreateProposal::class));
+                        $userRouter->get('/{id}', $this->container->get(Controller\Proposal\GetProposalRevision::class));
+                        $userRouter->put('/{id}', $this->container->get(Controller\Proposal\UpdateProposal::class));
+                        $userRouter->get('/{id}/revisions/{revision_id}', $this->container->get(Controller\Proposal\GetProposalRevision::class));
+                        $userRouter->get('/{id}/revisions', $this->container->get(Controller\Proposal\GetProposalRevisionList::class));
+                    }
+                );
+
+                $router->group(
+                    '/revisions',
+                    function (RouteGroup $userRouter) {
+                        $userRouter->post('/{id}/comments', $this->container->get(Controller\Comment\CreateComment::class));
+                        $userRouter->get('/{id}/comments', $this->container->get(Controller\Comment\GetCommentsForRevision::class));
                     }
                 );
 

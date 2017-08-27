@@ -2,7 +2,7 @@
 
 namespace HelpMeAbstract\Transformer;
 
-use HelpMeAbstract\Entity\Submission;
+use HelpMeAbstract\Entity\Proposal;
 use League\Fractal\TransformerAbstract;
 
 class SubmissionTransformer extends TransformerAbstract
@@ -38,7 +38,7 @@ class SubmissionTransformer extends TransformerAbstract
      *
      * @return mixed
      */
-    public function transform(Submission $submission) : array
+    public function transform(Proposal $submission) : array
     {
         return [
             'id' => $submission->getIdentifier(),
@@ -50,7 +50,7 @@ class SubmissionTransformer extends TransformerAbstract
      *
      * @return \League\Fractal\Resource\Collection|void
      */
-    public function includeAuthor(Submission $submission = null)
+    public function includeAuthor(Proposal $submission = null)
     {
         if ($submission === null) {
             return $this->null();
@@ -64,7 +64,7 @@ class SubmissionTransformer extends TransformerAbstract
      *
      * @return \League\Fractal\Resource\Collection|\League\Fractal\Resource\NullResource
      */
-    public function includeComments(Submission $submission = null)
+    public function includeComments(Proposal $submission = null)
     {
         if ($submission === null) {
             return $this->null();

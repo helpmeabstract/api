@@ -7,7 +7,10 @@
   "autoload": {
     "psr-4": {
       "HelpMeAbstract\\": "src/"
-    }
+    },
+    "files":[
+      "src/functions.php"
+    ]
   },
   "require": {
     "php": "^7.1",
