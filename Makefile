@@ -23,7 +23,7 @@ deploy-staging: deploy-container
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
 
 travis-run-migrations:
-	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=127.0.0.1	vendor/bin/doctrine migrations:migrate
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=127.0.0.1	vendor/bin/doctrine migrations:migrate --no-interaction
 
 local-run-migrations:
 	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=0.0.0.0:3306 vendor/bin/doctrine migrations:migrate --no-interaction
