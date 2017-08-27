@@ -1,0 +1,7 @@
+{
+  "lambda": {
+    "region": "us-east-1",
+    "invocationType": "event",
+    "functionName": "hma-notifications-send-email"
+  }
+}
