@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Comment;
-
 
 use HelpMeAbstract\Output\CreatesFractalScope;
 use HelpMeAbstract\Output\FractalAwareInterface;

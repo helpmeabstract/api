@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract;
-
 
 use League\Route\Route;
 use League\Route\Strategy\RequestResponseStrategy;

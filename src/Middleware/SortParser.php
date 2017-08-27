@@ -1,17 +1,15 @@
 <?php
 
-
 namespace HelpMeAbstract\Middleware;
 
-use HelpMeAbstract\Controller\Behavior\Sortable;
 use function HelpMeAbstract\next;
+use HelpMeAbstract\Controller\Behavior\Sortable;
 use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SortParser implements Middleware
 {
-
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null): ResponseInterface
     {
         if (!$handler = $request->getAttribute('handler-class')) {
@@ -29,18 +27,18 @@ class SortParser implements Middleware
             : call_user_func([$handler, 'getDefaultSort']);
 
         if (!is_string($requestedSort)) {
-            throw new BadRequestException("Invalid Sort Provided");
+            throw new BadRequestException('Invalid Sort Provided');
         }
 
         $sortDirection = (substr($requestedSort, 0, 1) === '-')
-            ? "DESC"
-            : "ASC";
+            ? 'DESC'
+            : 'ASC';
 
         $requestedSort = trim($requestedSort, '-');
 
         $sortableFields = call_user_func([$handler, 'getSortableFields']);
         if (!array_key_exists($requestedSort, $sortableFields)) {
-            throw new BadRequestException("Invalid Sort Field Requested");
+            throw new BadRequestException('Invalid Sort Field Requested');
         }
 
         $request = $request->withAttribute('sort', [$requestedSort, $sortDirection]);

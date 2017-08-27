@@ -1,10 +1,7 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Comment;
 
-
-use Assert\Assert;
 use Assert\Assertion;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\Comment;
@@ -44,7 +41,6 @@ class CreateComment implements FractalAwareInterface
         RevisionRepository $revisionRepository,
         CommentRepository $commentRepository
     ) {
-
         $this->db = $db;
         $this->commentRepository = $commentRepository;
         $this->revisionRepository = $revisionRepository;
@@ -54,8 +50,7 @@ class CreateComment implements FractalAwareInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $vars
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         Assertion::uuid($vars['id'], 'Invalid ID Provided');
 
         $user = $this->requireCurrentUser($request);
