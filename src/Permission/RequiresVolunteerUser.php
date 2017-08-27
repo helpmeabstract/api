@@ -1,9 +1,7 @@
 <?php
 
-
 namespace HelpMeAbstract\Permission;
 
-use const HelpMeAbstract\CURRENT_USER_ATTRIBUTE;
 use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -17,7 +15,7 @@ trait RequiresVolunteerUser
     {
         $user = $this->getBaseUser($request);
 
-        if ($user->isVolunteer() || $user->isAdmin()){
+        if ($user->isVolunteer() || $user->isAdmin()) {
             return $user;
         }
 

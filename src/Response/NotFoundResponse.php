@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Response;
-
 
 use Zend\Diactoros\Response\JsonResponse;
 

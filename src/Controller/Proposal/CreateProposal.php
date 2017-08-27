@@ -1,12 +1,9 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Proposal;
-
 
 use Assert\Assert;
 use Assert\Assertion;
-use Assert\AssertionFailedException;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\Revision;
 use HelpMeAbstract\Output\CreatesFractalScope;
@@ -29,7 +26,7 @@ class CreateProposal implements FractalAwareInterface
     private $db;
 
     /**
-     * @param EntityManager $db
+     * @param EntityManager      $db
      * @param RevisionRepository $revisionRepository
      */
     public function __construct(EntityManager $db, RevisionRepository $revisionRepository)
@@ -50,7 +47,7 @@ class CreateProposal implements FractalAwareInterface
 
         Assertion::string($attributes['body'], 'Invalid Body');
         Assertion::string($attributes['title'], 'Invalid Title');
-        Assert::that($attributes['sessionType'], "Invalid Session Type")
+        Assert::that($attributes['sessionType'], 'Invalid Session Type')
             ->nullOr()
             ->inArray(Revision::VALID_SESSION_TYPES);
 

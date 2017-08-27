@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Response;
-
 
 use Teapot\StatusCode;
 use Zend\Diactoros\Response\JsonResponse;

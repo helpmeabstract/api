@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Proposal;
-
 
 use HelpMeAbstract\Output\CreatesFractalScope;
 use HelpMeAbstract\Output\FractalAwareInterface;
@@ -30,11 +28,10 @@ class GetProposalRevisionList implements FractalAwareInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $vars
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $proposalId = $vars['id'];
 
-        $revisions =  $this->repository->findBy(['proposalId' => $proposalId], ['createdDate' => 'DESC']);
+        $revisions = $this->repository->findBy(['proposalId' => $proposalId], ['createdDate' => 'DESC']);
 
         $data = $this->outputCollection($revisions, new RevisionTransformer(), 'revisions')->toArray();
 

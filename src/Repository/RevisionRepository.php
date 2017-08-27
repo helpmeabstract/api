@@ -10,12 +10,14 @@ class RevisionRepository extends EntityRepository
 {
     /**
      * @param $proposalId
-     * @return Revision|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return Revision|null
      */
     public function findLatestForProposal($proposalId)
     {
-        try{
+        try {
             return $this->createQueryBuilder('p')
                 ->where('p.proposalId = ?1')
                 ->orderBy('p.createdDate', 'DESC')
@@ -23,8 +25,8 @@ class RevisionRepository extends EntityRepository
                 ->setParameter(1, $proposalId)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException $e){
-            return null;
+        } catch (NoResultException $e) {
+            return;
         }
     }
 }

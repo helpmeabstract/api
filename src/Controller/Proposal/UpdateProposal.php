@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Proposal;
 
 use Assert\Assert;
@@ -28,7 +27,7 @@ class UpdateProposal implements FractalAwareInterface
     private $db;
 
     /**
-     * @param EntityManager $db
+     * @param EntityManager      $db
      * @param RevisionRepository $revisionRepository
      */
     public function __construct(EntityManager $db, RevisionRepository $revisionRepository)
@@ -39,14 +38,14 @@ class UpdateProposal implements FractalAwareInterface
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars): ResponseInterface
     {
-        Assertion::uuid($vars['id'], "Invalid ID Provided");
+        Assertion::uuid($vars['id'], 'Invalid ID Provided');
         $proposal = $this->revisionRepository->findLatestForProposal($vars['id']);
 
-        if ($proposal === null){
+        if ($proposal === null) {
             return new NotFoundResponse();
         }
 
-        if ($proposal->getAuthor()->getId() !== $this->requireCurrentUser($request)->getId()){
+        if ($proposal->getAuthor()->getId() !== $this->requireCurrentUser($request)->getId()) {
             throw new UnauthorizedException();
         }
 
@@ -58,7 +57,7 @@ class UpdateProposal implements FractalAwareInterface
 
         Assertion::string($attributes['body'], 'Invalid Body');
         Assertion::string($attributes['title'], 'Invalid Title');
-        Assert::that($attributes['sessionType'], "Invalid Session Type")
+        Assert::that($attributes['sessionType'], 'Invalid Session Type')
             ->nullOr()
             ->inArray(Revision::VALID_SESSION_TYPES);
 

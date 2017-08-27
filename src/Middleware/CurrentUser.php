@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HelpMeAbstract\Middleware;
 
 use const HelpMeAbstract\CURRENT_USER_ATTRIBUTE;
@@ -26,8 +25,7 @@ class CurrentUser implements Middleware
         ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next = null
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $userId = $request->getCookieParams()[HELP_ME_ABSTRACT_COOKIE] ?? null;
 
         if ($userId) {

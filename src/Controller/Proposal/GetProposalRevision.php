@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\Proposal;
-
 
 use HelpMeAbstract\Output\CreatesFractalScope;
 use HelpMeAbstract\Output\FractalAwareInterface;
@@ -31,8 +29,7 @@ class GetProposalRevision implements FractalAwareInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $vars
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $includes = $request->getQueryParams()['include'] ?? [];
 
         $proposalId = $vars['id'];
@@ -42,7 +39,7 @@ class GetProposalRevision implements FractalAwareInterface
             ? $this->repository->findOneBy(['id' => $revisionId])
             : $this->repository->findLatestForProposal($proposalId);
 
-        if (!$revision){
+        if (!$revision) {
             return new NotFoundResponse();
         }
 

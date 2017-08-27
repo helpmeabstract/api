@@ -20,16 +20,16 @@ class Revision
     use HasCreatedDate;
     use HasUuid;
 
-    const SESSION_TYPE_LIGHTNING = "lightning";
-    const SESSION_TYPE_HALF_HOUR = "half-hour";
-    const SESSION_TYPE_FULL_HOUR = "full-hour";
-    const SESSION_TYPE_TUTORIAL = "tutorial";
+    const SESSION_TYPE_LIGHTNING = 'lightning';
+    const SESSION_TYPE_HALF_HOUR = 'half-hour';
+    const SESSION_TYPE_FULL_HOUR = 'full-hour';
+    const SESSION_TYPE_TUTORIAL = 'tutorial';
 
     const VALID_SESSION_TYPES = [
         self::SESSION_TYPE_LIGHTNING,
         self::SESSION_TYPE_HALF_HOUR,
         self::SESSION_TYPE_FULL_HOUR,
-        self::SESSION_TYPE_TUTORIAL
+        self::SESSION_TYPE_TUTORIAL,
     ];
 
     /**

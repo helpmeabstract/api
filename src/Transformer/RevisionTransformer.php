@@ -9,7 +9,7 @@ class RevisionTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'comments',
-        'author'
+        'author',
     ];
     /**
      * @var CommentTransformer
@@ -31,7 +31,7 @@ class RevisionTransformer extends TransformerAbstract
             'sessionType' => $revision->getSessionType(),
             'maxCharacters' => $revision->getMaxCharacters(),
             'submissionId' => $revision->getProposalId(),
-            'createdDate' => $revision->getCreateDate()
+            'createdDate' => $revision->getCreateDate(),
         ];
     }
 

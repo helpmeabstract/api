@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Permission;
-
 
 use const HelpMeAbstract\CURRENT_USER_ATTRIBUTE;
 use HelpMeAbstract\Entity\User;
@@ -15,7 +13,7 @@ trait RequiresCurrentUser
     {
         $currentUser = $request->getAttribute(CURRENT_USER_ATTRIBUTE);
 
-        if ($currentUser === null || ! $currentUser instanceof User){
+        if ($currentUser === null || !$currentUser instanceof User) {
             throw new UnauthorizedException();
         }
 

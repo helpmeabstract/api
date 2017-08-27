@@ -1,8 +1,6 @@
 <?php
 
-
 namespace HelpMeAbstract\Middleware;
-
 
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\RouteCollection;

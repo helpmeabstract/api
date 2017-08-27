@@ -2,11 +2,11 @@
 
 namespace HelpMeAbstract\Controller;
 
+use const HelpMeAbstract\HELP_ME_ABSTRACT_COOKIE;
 use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\User;
-use const HelpMeAbstract\HELP_ME_ABSTRACT_COOKIE;
 use HelpMeAbstract\OAuthSource\Github;
 use HelpMeAbstract\Repository\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;

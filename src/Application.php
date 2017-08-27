@@ -13,7 +13,6 @@ use HelpMeAbstract\Response\NotAuthorizedResponse;
 use League\Route\Http\Exception\UnauthorizedException;
 use League\Route\RouteCollection;
 use Psr\Http\Message\ServerRequestInterface;
-use Teapot\StatusCode;
 use Whoops\Run;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
@@ -29,7 +28,7 @@ final class Application
     {
         $this->container->get(Run::class)->register();
 
-        try{
+        try {
             $currentUser = new CurrentUser($this->container->get(UserRepository::class));
             $response = $currentUser(
                 $this->container->get(ServerRequestInterface::class),
@@ -38,9 +37,9 @@ final class Application
                     $this->container->get(RouteCollection::class)
                 ))
             );
-        } catch (UnauthorizedException $e){
+        } catch (UnauthorizedException $e) {
             $response = new NotAuthorizedResponse();
-        } catch (AssertionFailedException $e){
+        } catch (AssertionFailedException $e) {
             $response = new BadRequestResponse([$e->getMessage()]);
         }
 
