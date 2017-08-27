@@ -14,10 +14,11 @@ env:
   global:
     - MYSQL_USER=helpmeabstract
     - MYSQL_PASSWORD=securelol
+    - MYSQL_HOTNAME=127.0.0.1
 matrix:
   fast_finish: true
   include:
-    - php: 7
+    - php: 7.1
 
 cache:
   directories:
