@@ -24,6 +24,9 @@ class RouterServiceProvider extends AbstractServiceProvider
             RouteCollection::class,
             function () : RouteCollection {
                 $router = new RouteCollection();
+
+                $router->get('/', $this->container->get(Controller\User\GetAll::class));
+
                 $router->group(
                     '/users',
                     function (RouteGroup $userRouter) {
@@ -32,8 +35,7 @@ class RouterServiceProvider extends AbstractServiceProvider
                     }
                 );
 
-                $authController = $this->container->get(Controller\Auth::class);
-                $router->get('/auth', [$authController, 'auth']);
+                $router->get('/auth', $this->container->get(Controller\Auth::class));
 
                 return $router;
             }

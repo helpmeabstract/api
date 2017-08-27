@@ -18,7 +18,7 @@ trait HasUuid
     protected $id;
 
     /**
-     * @return mixed
+     * @return Uuid
      */
     public function getId()
     {

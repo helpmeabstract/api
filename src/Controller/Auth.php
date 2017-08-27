@@ -2,8 +2,13 @@
 
 namespace HelpMeAbstract\Controller;
 
+use Dflydev\FigCookies\FigResponseCookies;
+use Dflydev\FigCookies\SetCookie;
 use Doctrine\ORM\EntityManager;
+use Faker\Provider\ka_GE\DateTime;
+use HelpMeAbstract\Entity\User;
 use HelpMeAbstract\OAuthSource\Github;
+use HelpMeAbstract\Repository\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -13,13 +18,19 @@ class Auth
      * @var EntityManager
      */
     private $db;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
     /**
      * @param EntityManager $db
+     * @param UserRepository $userRepository
      */
-    public function __construct(EntityManager $db )
+    public function __construct(EntityManager $db, UserRepository $userRepository)
     {
         $this->db = $db;
+        $this->userRepository = $userRepository;
     }
 
     public function __invoke(Request $request, Response $response): Response
@@ -30,12 +41,31 @@ class Auth
             throw new \Exception("BAD CODE, FRIEND");
         }
 
-        $user = (new Github())->getUser($code);
+        $userInfo = (new Github())->getUser($code);
 
-        $this->db->persist($user);
-        $this->db->flush();
+        $user = $this->userRepository->findOneBy(['email' => $userInfo['email']]);
 
-        return (new RedirectResponse('/', 301));
+        if (!$user){
+            $user = new User();
+            $user->setEmail($userInfo['email']);
+            $user->setAuthSource('Github');
+            $user->setAuthToken($userInfo['token']);
+            $user->setFirstName($userInfo['first_name']);
+            $user->setLastName($userInfo['last_name']);
+            $user->setLocation($userInfo['location']);
+            $user->setGithubHandle($userInfo['login']);
+
+            $this->db->persist($user);
+            $this->db->flush();
+        }
+
+        $response = (new RedirectResponse('/', 301));
+
+        return FigResponseCookies::set($response, SetCookie::create('hma-user-id')
+            ->withValue($user->getId()->toString())
+            ->withExpires((new \DateTimeImmutable('now'))->modify('+1 week'))
+            ->withDomain('0.0.0.0')
+        );
 
     }
 }
