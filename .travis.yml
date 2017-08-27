@@ -39,8 +39,8 @@ before_script:
   - make travis-run-migrations
 
 script:
-  - vendor/bin/phpunit --configuration test/Unit/phpunit.xml --coverage-clover build/logs/clover.xml;
-  - vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run;
+  - make test
+  - make cs
 
 notifications:
   email:
