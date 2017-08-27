@@ -18,7 +18,7 @@ class UserTransformer extends TransformerAbstract
             'githubHandle' => $user->getGithubHandle(),
             'timesPreviouslySpoken' => $user->getTimesPreviouslySpoken(),
             'primaryTechnicalLanguage' => $user->getPrimaryTechnicalLanguage(),
-            'primarySpoken_language' => $user->getPrimarySpokenLanguage(),
+            'primarySpokenLanguage' => $user->getPrimarySpokenLanguage(),
             'location' => $user->getLocation(),
             'gender' => $user->getGender(),
             'ageRange' => $user->getAgeRange(),
