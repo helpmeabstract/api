@@ -56,6 +56,8 @@ class RouterServiceProvider extends AbstractServiceProvider
                     }
                 );
 
+                $router->delete('/comments/{id}', $this->container->get(Controller\Comment\DeleteComment::class));
+
                 $router->get('/auth', $this->container->get(Controller\Auth::class));
 
                 return $router;

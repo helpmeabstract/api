@@ -22,6 +22,7 @@ class ControllerServiceProvider extends AbstractServiceProvider
         Controller\Proposal\CreateProposal::class,
         Controller\Comment\CreateComment::class,
         Controller\Comment\GetCommentsForRevision::class,
+        Controller\Comment\DeleteComment::class,
     ];
 
     /**
@@ -80,6 +81,13 @@ class ControllerServiceProvider extends AbstractServiceProvider
             return new Controller\Comment\CreateComment(
                 $this->container->get(EntityManager::class),
                 $this->container->get(RevisionRepository::class),
+                $this->container->get(CommentRepository::class)
+            );
+        });
+
+        $this->container->share(Controller\Comment\DeleteComment::class, function () {
+            return new Controller\Comment\DeleteComment(
+                $this->container->get(EntityManager::class),
                 $this->container->get(CommentRepository::class)
             );
         });
