@@ -35,6 +35,17 @@ class RouterServiceProvider extends AbstractServiceProvider
                     }
                 );
 
+                $router->group(
+                    '/proposals',
+                    function (RouteGroup $userRouter) {
+                        $userRouter->post('/', $this->container->get(Controller\Proposal\CreateProposal::class));
+                        $userRouter->get('/{id}', $this->container->get(Controller\Proposal\GetProposalRevision::class));
+                        $userRouter->put('/{id}', $this->container->get(Controller\Proposal\UpdateProposal::class));
+                        $userRouter->get('/{id}/revisions/{revision_id}', $this->container->get(Controller\Proposal\GetProposalRevision::class));
+                        $userRouter->get('/{id}/revisions', $this->container->get(Controller\Proposal\GetProposalRevisionList::class));
+                    }
+                );
+
                 $router->get('/auth', $this->container->get(Controller\Auth::class));
 
                 return $router;

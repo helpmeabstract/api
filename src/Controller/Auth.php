@@ -6,6 +6,7 @@ use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\User;
+use const HelpMeAbstract\HELP_ME_ABSTRACT_COOKIE;
 use HelpMeAbstract\OAuthSource\Github;
 use HelpMeAbstract\Repository\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -61,7 +62,7 @@ class Auth
 
         $response = (new RedirectResponse('/', 301));
 
-        return FigResponseCookies::set($response, SetCookie::create('hma-user-id')
+        return FigResponseCookies::set($response, SetCookie::create(HELP_ME_ABSTRACT_COOKIE)
             ->withValue($user->getId()->toString())
             ->withExpires((new \DateTimeImmutable('now'))->modify('+1 week'))
             ->withDomain('0.0.0.0')

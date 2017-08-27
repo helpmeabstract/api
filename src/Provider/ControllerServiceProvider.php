@@ -6,6 +6,7 @@ namespace HelpMeAbstract\Provider;
 
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Controller;
+use HelpMeAbstract\Repository\RevisionRepository;
 use HelpMeAbstract\Repository\UserRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -15,6 +16,9 @@ class ControllerServiceProvider extends AbstractServiceProvider
         Controller\User\GetAll::class,
         Controller\User\GetSingle::class,
         Controller\Auth::class,
+        Controller\Proposal\GetProposalRevisionList::class,
+        Controller\Proposal\GetProposalRevision::class,
+        Controller\Proposal\CreateProposal::class,
     ];
 
     /**
@@ -41,6 +45,32 @@ class ControllerServiceProvider extends AbstractServiceProvider
             $userRepository = $this->container->get(UserRepository::class);
 
             return new Controller\User\GetSingle($userRepository);
+        });
+
+        $this->container->share(Controller\Proposal\GetProposalRevision::class, function () {
+            $repository = $this->container->get(RevisionRepository::class);
+
+            return new Controller\Proposal\GetProposalRevision($repository);
+        });
+
+        $this->container->share(Controller\Proposal\GetProposalRevisionList::class, function () {
+            $repository = $this->container->get(RevisionRepository::class);
+
+            return new Controller\Proposal\GetProposalRevisionList($repository);
+        });
+
+        $this->container->share(Controller\Proposal\CreateProposal::class, function () {
+            return new Controller\Proposal\CreateProposal(
+                $this->container->get(EntityManager::class),
+                $this->container->get(RevisionRepository::class)
+            );
+        });
+
+        $this->container->share(Controller\Proposal\UpdateProposal::class, function () {
+            return new Controller\Proposal\UpdateProposal(
+                $this->container->get(EntityManager::class),
+                $this->container->get(RevisionRepository::class)
+            );
         });
     }
 }
