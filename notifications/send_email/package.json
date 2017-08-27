@@ -1,0 +1,20 @@
+{
+  "name": "send_email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.100.0",
+    "email-templates": "^2.7.1",
+    "handlebars": "^4.0.10"
+  },
+  "devDependencies": {
+    "lambda-local": "^1.4.2"
+  }
+}
