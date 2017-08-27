@@ -1,8 +1,5 @@
 AWS_REGION="us-east-1"
 AWS_PROFILE="default"
-MYSQL_USER=helpmeabstract
-MYSQL_PASSWORD=securelol
-MYSQL_HOSTNAME= 0.0.0.0:3306
 DOCKER_LOGIN=$(shell aws ecr get-login --region=$(AWS_REGION) --profile=$(AWS_PROFILE))
 ecr-login:
 	@echo Getting an ECR Login Token
@@ -26,10 +23,10 @@ deploy-staging: deploy-container
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
 
 travis-run-migrations:
-	vendor/bin/doctrine migrations:migrate
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=127.0.0.1	vendor/bin/doctrine migrations:migrate
 
 local-run-migrations:
-	docker-compose exec app vendor/bin/doctrine migrations:migrate
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=0.0.0.0:3306 vendor/bin/doctrine migrations:migrate
 cs:
 	vendor/bin/php-cs-fixer fix --config=.php_cs
 

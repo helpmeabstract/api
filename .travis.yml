@@ -10,11 +10,6 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
 
-env:
-  global:
-    - MYSQL_USER=helpmeabstract
-    - MYSQL_PASSWORD=securelol
-    - MYSQL_HOTNAME=127.0.0.1
 matrix:
   fast_finish: true
   include:
@@ -39,7 +34,7 @@ before_script:
   - make travis-run-migrations
 
 script:
-#  - vendor/bin/doctrine orm:info
+  - vendor/bin/doctrine orm:info
   - vendor/bin/phpunit --configuration test/Unit/phpunit.xml --coverage-clover build/logs/clover.xml;
   - vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run;
 
