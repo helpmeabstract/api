@@ -5,25 +5,21 @@ namespace HelpMeAbstract\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
 use HelpMeAbstract\Entity\Behavior\HasUuid;
-use HelpMeAbstract\Entity\Notification\Subject;
+use HelpMeAbstract\Entity\Comment\Snippet;
 
 /**
  * @ORM\Entity()
  * @ORM\Table( name="comments")
  */
-class Comment implements Subject
+class Comment
 {
     use HasUuid;
     use HasCreatedDate;
 
     /**
-     * @ORM\Column(
-     *      type="text"
-     * )
-     *
-     * @var string
+     * @ORM\Embedded(class = "HelpMeAbstract\Entity\Comment\Snippet")
      */
-    private $body;
+    private $contents;
 
     /**
      * @ORM\Column(
@@ -37,7 +33,11 @@ class Comment implements Subject
     private $hasBeenEdited = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\Revision", inversedBy="comments")
+     * @ORM\ManyToOne(
+     *      targetEntity="HelpMeAbstract\Entity\Revision",
+     *      inversedBy="comments"
+     * )
+     * @ORM\JoinColumn(name="revision_id", referencedColumnName="id", nullable=false)
      *
      * @var Revision
      */
@@ -45,6 +45,7 @@ class Comment implements Subject
 
     /**
      * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      *
      * @var User
      */
@@ -53,13 +54,13 @@ class Comment implements Subject
     /**
      * @param User     $user
      * @param Revision $revision
-     * @param string   $body
+     * @param Snippet   $snippet
      */
-    public function __construct(User $user, Revision $revision, string $body)
+    public function __construct(User $user, Revision $revision, Snippet $snippet)
     {
         $this->author = $user;
         $this->revision = $revision;
-        $this->body = $body;
+        $this->contents = $snippet;
     }
 
     /**
@@ -71,11 +72,11 @@ class Comment implements Subject
     }
 
     /**
-     * @return string
+     * @return Snippet
      */
-    public function getBody() : string
+    public function getContents() : Snippet
     {
-        return $this->body;
+        return $this->contents;
     }
 
     /**
@@ -84,39 +85,6 @@ class Comment implements Subject
     public function getRevision() : Revision
     {
         return $this->revision;
-    }
-
-    /**
-     * @param string $body
-     */
-    public function setBody(string $body)
-    {
-        $this->body = $body;
-        $this->hasBeenEdited = true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl() : string
-    {
-        // TODO: Implement getUrl() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getExcerpt() : string
-    {
-        // TODO: Implement getExcerpt() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getHeadline() : string
-    {
-        // TODO: Implement getHeadline() method.
     }
 
     /**

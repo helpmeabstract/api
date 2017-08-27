@@ -10,7 +10,7 @@
     }
   },
   "require": {
-    "php": "^7.0",
+    "php": "^7.1",
     "aws/aws-sdk-php": "^3.19",
     "beberlei/assert": "^2.6",
     "doctrine/migrations": "^1.4",

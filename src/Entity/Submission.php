@@ -3,10 +3,9 @@
 namespace HelpMeAbstract\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use HelpMeAbstract\Entity\Notification\Subject;
 use Ramsey\Uuid\Uuid;
 
-class Submission implements Subject
+class Submission
 {
     /**
      * @var Uuid

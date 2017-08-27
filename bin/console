@@ -46,6 +46,15 @@ $commands = [
     new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
     new \Doctrine\DBAL\Tools\Console\Command\ReservedWordsCommand(),
     new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
+
+    // Doctrine Migrations
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\LatestCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
 ];
 
 $migrationCommands = [
@@ -64,11 +73,10 @@ $configuration = $container->get(DBAL\Migrations\Configuration\Configuration::cl
 
 array_walk(
     $migrationCommands,
-    function (DBAL\Migrations\Tools\Console\Command\AbstractCommand $command) use ($configuration, &$commands) {
+    function (DBAL\Migrations\Tools\Console\Command\AbstractCommand $command) use ($configuration) {
         $command->setMigrationConfiguration($configuration);
-        $commands[] = $command;
     }
 );
 
-$application->addCommands($commands);
+$application->addCommands(array_merge($commands, $migrationCommands));
 $application->run();

@@ -10,17 +10,18 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $user) : array
     {
         return [
-            'first_name' => $user->getFirstName(),
-            'last_name' => $user->getLastName(),
+            'id' => $user->getId(),
+            'firstName' => $user->getFirstName(),
+            'lastName' => $user->getLastName(),
             'email' => $user->getEmail(),
-            'twitter_handle' => $user->getTwitterHandle(),
-            'github_handle' => $user->getGithubHandle(),
-            'times_previously_spoken' => $user->getTimesPreviouslySpoken(),
-            'primary_technical_language' => $user->getPrimaryTechnicalLanguage(),
-            'primary_spoken_language' => $user->getPrimarySpokenLanguage(),
+            'twitterHandle' => $user->getTwitterHandle(),
+            'githubHandle' => $user->getGithubHandle(),
+            'timesPreviouslySpoken' => $user->getTimesPreviouslySpoken(),
+            'primaryTechnicalLanguage' => $user->getPrimaryTechnicalLanguage(),
+            'primarySpoken_language' => $user->getPrimarySpokenLanguage(),
             'location' => $user->getLocation(),
             'gender' => $user->getGender(),
-            'age_range' => $user->getAgeRange(),
+            'ageRange' => $user->getAgeRange(),
         ];
     }
 }

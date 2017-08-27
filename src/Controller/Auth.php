@@ -2,19 +2,40 @@
 
 namespace HelpMeAbstract\Controller;
 
+use Doctrine\ORM\EntityManager;
+use HelpMeAbstract\OAuthSource\Github;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Zend\Diactoros\Response\TextResponse;
-
+use Zend\Diactoros\Response\RedirectResponse;
 class Auth
 {
-    public function login(Request $request, Response $response, array $vars): Response
+    /**
+     * @var EntityManager
+     */
+    private $db;
+
+    /**
+     * @param EntityManager $db
+     */
+    public function __construct(EntityManager $db )
     {
-        return new TextResponse('Help Me Abstract!');
+        $this->db = $db;
     }
 
-    public function logout(Request $request, Response $response, array $vars): Response
+    public function __invoke(Request $request, Response $response): Response
     {
-        return new TextResponse('Help Me Abstract!');
+        $code = $request->getQueryParams()['code'] ?? null;
+
+        if (!$code){
+            throw new \Exception("BAD CODE, FRIEND");
+        }
+
+        $user = (new Github())->getUser($code);
+
+        $this->db->persist($user);
+        $this->db->flush();
+
+        return (new RedirectResponse('/', 301));
+
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract\Provider;
 
+use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Controller;
 use HelpMeAbstract\Repository\UserRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -11,11 +12,9 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 class ControllerServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        Controller\Auth::class,
-        Controller\User::class,
-        Controller\Notification::class,
-        Controller\Submission::class,
-        Controller\Comment::class,
+        Controller\User\GetAll::class,
+        Controller\User\GetSingle::class,
+        Controller\Auth::class
     ];
 
     /**
@@ -25,15 +24,20 @@ class ControllerServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(Controller\Auth::class);
-        $this->container->share(Controller\User::class, function () {
+        $this->container->share(Controller\Auth::class, function(){
+            return new Controller\Auth($this->container->get(EntityManager::class));
+        });
+
+        $this->container->share(Controller\User\GetAll::class, function () {
             $userRepository = $this->container->get(UserRepository::class);
 
-            return new Controller\User($userRepository);
+            return new Controller\User\GetAll($userRepository);
         });
-        $this->container->share(Controller\Notification::class);
-        $this->container->share(Controller\Submission::class);
 
-        $this->container->share(Controller\Comment::class);
+        $this->container->share(Controller\User\GetSingle::class, function () {
+            $userRepository = $this->container->get(UserRepository::class);
+
+            return new Controller\User\GetSingle($userRepository);
+        });
     }
 }

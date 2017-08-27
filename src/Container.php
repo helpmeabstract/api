@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
+use HelpMeAbstract\Output\FractalAwareInterface;
+use League\Fractal\Manager;
+use League\Fractal\Serializer\JsonApiSerializer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -14,9 +17,6 @@ use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
-/**
- * Class Container.
- */
 final class Container extends \League\Container\Container
 {
     public function __construct()
@@ -36,6 +36,10 @@ final class Container extends \League\Container\Container
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
 
+        $this->share(Manager::class, function(){
+            return (new Manager())->setSerializer(new JsonApiSerializer());
+        });
+
         $this->addServiceProvider(new Provider\LoggerServiceProvider());
         $this->addServiceProvider(new Provider\RouterServiceProvider());
         $this->addServiceProvider(new Provider\EntityManagerServiceProvider());
@@ -44,6 +48,7 @@ final class Container extends \League\Container\Container
         $this->addServiceProvider(new Provider\ControllerServiceProvider());
 
         $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
+        $this->inflector(FractalAwareInterface::class)->invokeMethod('setManager', [Manager::class]);
 
         $this->share(Run::class, function () {
             $whoops = new Run();
