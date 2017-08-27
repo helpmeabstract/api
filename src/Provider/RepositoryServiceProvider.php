@@ -12,6 +12,7 @@ class RepositoryServiceProvider extends AbstractServiceProvider
     private $repositoryEntityMap = [
         Repository\UserRepository::class => Entity\User::class,
         Repository\RevisionRepository::class => Entity\Revision::class,
+        Repository\CommentRepository::class => Entity\Comment::class,
     ];
 
     public function __construct()

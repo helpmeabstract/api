@@ -41,7 +41,7 @@ class Snippet
      */
     private $stopIndex;
 
-    public function __construct(string $body, int $startIndex, int $stopIndex)
+    public function __construct(string $body, int $startIndex = null, int $stopIndex = null)
     {
         $this->body = $body;
         $this->startIndex = $startIndex;

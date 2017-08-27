@@ -8,8 +8,10 @@ use HelpMeAbstract\Entity\Behavior\HasUuid;
 use HelpMeAbstract\Entity\Comment\Snippet;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\CommentRepository")
  * @ORM\Table( name="comments")
+ *
+ * @ORM\HasLifecycleCallbacks
  */
 class Comment
 {

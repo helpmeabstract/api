@@ -6,6 +6,7 @@ namespace HelpMeAbstract\Provider;
 
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Controller;
+use HelpMeAbstract\Repository\CommentRepository;
 use HelpMeAbstract\Repository\RevisionRepository;
 use HelpMeAbstract\Repository\UserRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -19,6 +20,8 @@ class ControllerServiceProvider extends AbstractServiceProvider
         Controller\Proposal\GetProposalRevisionList::class,
         Controller\Proposal\GetProposalRevision::class,
         Controller\Proposal\CreateProposal::class,
+        Controller\Comment\CreateComment::class,
+        Controller\Comment\GetCommentsForRevision::class,
     ];
 
     /**
@@ -70,6 +73,20 @@ class ControllerServiceProvider extends AbstractServiceProvider
             return new Controller\Proposal\UpdateProposal(
                 $this->container->get(EntityManager::class),
                 $this->container->get(RevisionRepository::class)
+            );
+        });
+
+        $this->container->share(Controller\Comment\CreateComment::class, function () {
+            return new Controller\Comment\CreateComment(
+                $this->container->get(EntityManager::class),
+                $this->container->get(RevisionRepository::class),
+                $this->container->get(CommentRepository::class)
+            );
+        });
+
+        $this->container->share(Controller\Comment\GetCommentsForRevision::class, function () {
+            return new Controller\Comment\GetCommentsForRevision(
+                $this->container->get(CommentRepository::class)
             );
         });
     }

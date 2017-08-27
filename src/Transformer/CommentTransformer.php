@@ -34,7 +34,7 @@ class CommentTransformer extends TransformerAbstract
         return [
             'id' => $comment->getId(),
             'created_date' => $comment->getCreateDate()->format(DATE_ATOM),
-            'body' => $comment->getBody(),
+            'body' => $comment->getContents()->getBody(),
             'has_been_edited' => $comment->hasBeenEdited(),
             'revision_id' => $comment->getRevision()->getId(),
         ];
