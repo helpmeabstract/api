@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HelpMeAbstract;
 
-use Dotenv\Dotenv;
 use HelpMeAbstract\Output\FractalAwareInterface;
 use League\Fractal\Manager;
 use League\Fractal\Serializer\JsonApiSerializer;
@@ -36,10 +35,6 @@ final class Container extends \League\Container\Container
         $this->share(Environment::class, function () : Environment {
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
-
-        if (!$this->get(Environment::class)->isProduction()){
-            (new Dotenv(__DIR__.'/../'))->load();
-        }
 
         $this->share(Manager::class, function(){
             return (new Manager())->setSerializer(new JsonApiSerializer());

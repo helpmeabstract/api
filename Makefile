@@ -1,5 +1,8 @@
 AWS_REGION="us-east-1"
 AWS_PROFILE="default"
+MYSQL_USER=helpmeabstract
+MYSQL_PASSWORD=securelol
+MYSQL_HOSTNAME= 0.0.0.0:3306
 DOCKER_LOGIN=$(shell aws ecr get-login --region=$(AWS_REGION) --profile=$(AWS_PROFILE))
 ecr-login:
 	@echo Getting an ECR Login Token
