@@ -22,5 +22,16 @@ deploy-staging: deploy-container
 	@echo Deploying to staging
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
 
+travis-run-migrations:
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=127.0.0.1	vendor/bin/doctrine migrations:migrate --no-interaction
+
+local-run-migrations:
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=0.0.0.0:3306 vendor/bin/doctrine migrations:migrate --no-interaction
+
+test:
+	vendor/bin/phpunit --configuration test/Unit/phpunit.xml --coverage-clover build/logs/clover.xml
 cs:
+	vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run
+
+cbf:
 	vendor/bin/php-cs-fixer fix --config=.php_cs

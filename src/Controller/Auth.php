@@ -5,13 +5,13 @@ namespace HelpMeAbstract\Controller;
 use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
 use Doctrine\ORM\EntityManager;
-use Faker\Provider\ka_GE\DateTime;
 use HelpMeAbstract\Entity\User;
 use HelpMeAbstract\OAuthSource\Github;
 use HelpMeAbstract\Repository\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\RedirectResponse;
+
 class Auth
 {
     /**
@@ -24,7 +24,7 @@ class Auth
     private $userRepository;
 
     /**
-     * @param EntityManager $db
+     * @param EntityManager  $db
      * @param UserRepository $userRepository
      */
     public function __construct(EntityManager $db, UserRepository $userRepository)
@@ -37,15 +37,15 @@ class Auth
     {
         $code = $request->getQueryParams()['code'] ?? null;
 
-        if (!$code){
-            throw new \Exception("BAD CODE, FRIEND");
+        if (!$code) {
+            throw new \Exception('BAD CODE, FRIEND');
         }
 
         $userInfo = (new Github())->getUser($code);
 
         $user = $this->userRepository->findOneBy(['email' => $userInfo['email']]);
 
-        if (!$user){
+        if (!$user) {
             $user = new User();
             $user->setEmail($userInfo['email']);
             $user->setAuthSource('Github');
@@ -66,6 +66,5 @@ class Auth
             ->withExpires((new \DateTimeImmutable('now'))->modify('+1 week'))
             ->withDomain('0.0.0.0')
         );
-
     }
 }

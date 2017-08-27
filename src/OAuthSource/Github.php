@@ -12,7 +12,7 @@ class Github implements OAuthSource
         $response = $client->post('https://github.com/login/oauth/access_token?client_id=' . getenv('GITHUB_CLIENT_ID') . '&redirect_uri=http://0.0.0.0:8080/auth&client_secret=' . getenv('GITHUB_SECRET') . '&code=' . $code);
 
         if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Something went terribly terribly wrong");
+            throw new \Exception('Something went terribly terribly wrong');
         }
 
         parse_str($response->getBody()->getContents(), $vals);

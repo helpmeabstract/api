@@ -8,8 +8,6 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www
 
-ONBUILD COPY src html composer.json /var/www
-ONBUILD COPY ./scripts/entrypoint.sh /var/www/scripts/entrypoint.sh
-
-ONBUILD COPY ./scripts/install_composer /tmp
+ONBUILD COPY src html composer.json /var/www/
+ONBUILD COPY ./scripts/install_composer.php /tmp
 ONBUILD RUN php /tmp/install_composer.php && composer install && composer dump-autoload -o

@@ -231,7 +231,6 @@ class User
         $this->type = self::TYPE_USER;
     }
 
-
     /**
      * @return string
      */
@@ -239,7 +238,6 @@ class User
     {
         return $this->firstName;
     }
-
 
     /**
      * @return string

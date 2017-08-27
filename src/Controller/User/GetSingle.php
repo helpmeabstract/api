@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HelpMeAbstract\Controller\User;
 
 use HelpMeAbstract\Output\CreatesFractalScope;

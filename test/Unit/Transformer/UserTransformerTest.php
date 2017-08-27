@@ -15,6 +15,7 @@ class UserTransformerTest extends \PHPUnit_Framework_TestCase
         $faker = $this->getFaker();
         $user = $this->createMock(User::class);
 
+        $id = $this->expectGetter($user, 'getId', $faker->uuid);
         $firstName = $this->expectGetter($user, 'getFirstName', $faker->word);
         $lastName = $this->expectGetter($user, 'getLastName', $faker->word);
         $email = $this->expectGetter($user, 'getEmail', $faker->email);
@@ -30,17 +31,18 @@ class UserTransformerTest extends \PHPUnit_Framework_TestCase
         $transformer = new UserTransformer();
 
         $expected = [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
+            'id' => $id,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
             'email' => $email,
-            'twitter_handle' => $twitterHandle,
-            'github_handle' => $githubHandle,
-            'times_previously_spoken' => $timesPreviouslySpoken,
-            'primary_technical_language' => $primaryTechnicalLanguage,
-            'primary_spoken_language' => $primarySpokenLanguage,
+            'twitterHandle' => $twitterHandle,
+            'githubHandle' => $githubHandle,
+            'timesPreviouslySpoken' => $timesPreviouslySpoken,
+            'primaryTechnicalLanguage' => $primaryTechnicalLanguage,
+            'primarySpokenLanguage' => $primarySpokenLanguage,
             'location' => $location,
             'gender' => $gender,
-            'age_range' => $ageRange,
+            'ageRange' => $ageRange,
         ];
 
         $this->assertEquals($expected, $transformer->transform($user));
