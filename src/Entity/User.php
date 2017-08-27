@@ -5,7 +5,6 @@ namespace HelpMeAbstract\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasUuid;
-use HelpMeAbstract\Entity\Notification\Preference;
 
 /**
  * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\UserRepository")
@@ -13,11 +12,11 @@ use HelpMeAbstract\Entity\Notification\Preference;
  */
 class User
 {
+    use HasUuid;
+
     const TYPE_USER = 'user';
     const TYPE_ADMIN = 'admin';
     const TYPE_VOLUNTEER = 'volunteer';
-
-    use HasUuid;
 
     /**
      * @ORM\Column(
@@ -51,7 +50,8 @@ class User
     /**
      * @ORM\Column(
      *      type="string",
-     *     name ="twitter_handle"
+     *     name ="twitter_handle",
+     *     nullable=true
      * )
      *
      * @var string
@@ -78,11 +78,6 @@ class User
     private $type;
 
     /**
-     * @ORM\Embedded(class = "HelpMeAbstract\Entity\Notification\Preference")
-     */
-    private $notificationPreference;
-
-    /**
      * @ORM\Column(
      *      type="boolean",
      *     name="show_profile"
@@ -90,7 +85,7 @@ class User
      *
      * @var bool
      */
-    private $showProfile;
+    private $showProfile = false;
 
     /**
      * @ORM\Column(
@@ -184,18 +179,11 @@ class User
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="HelpMeAbstract\Entity\Notification", mappedBy="recipient")
-     *
-     * @var Notification[]|ArrayCollection
-     */
-    private $notifications;
-
-    /**
      * @var Submission[]|ArrayCollection
      */
     private $submissions;
 
-    private function __construct($type = null)
+    public function __construct($type = null)
     {
         $this->type = $type ?: self::TYPE_USER;
         $this->comments = new ArrayCollection();
@@ -243,13 +231,6 @@ class User
         $this->type = self::TYPE_USER;
     }
 
-    /**
-     * @param Preference $notificationPreference
-     */
-    public function setNotificationPreference(Preference $notificationPreference)
-    {
-        $this->notificationPreference = $notificationPreference;
-    }
 
     /**
      * @return string
@@ -259,13 +240,6 @@ class User
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName(string $firstName)
-    {
-        $this->firstName = $firstName;
-    }
 
     /**
      * @return string
@@ -273,14 +247,6 @@ class User
     public function getLastName() : string
     {
         return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName(string $lastName)
-    {
-        $this->lastName = $lastName;
     }
 
     /**
@@ -302,7 +268,7 @@ class User
     /**
      * @return string
      */
-    public function getTwitterHandle() : string
+    public function getTwitterHandle()
     {
         return $this->twitterHandle;
     }
@@ -348,17 +314,9 @@ class User
     }
 
     /**
-     * @return Notification[]|ArrayCollection
-     */
-    public function getNotifications() : ArrayCollection
-    {
-        return $this->notifications;
-    }
-
-    /**
      * @return string
      */
-    public function getTimesPreviouslySpoken() : string
+    public function getTimesPreviouslySpoken()
     {
         return $this->timesPreviouslySpoken;
     }
@@ -374,7 +332,7 @@ class User
     /**
      * @return string
      */
-    public function getPrimaryTechnicalLanguage() : string
+    public function getPrimaryTechnicalLanguage()
     {
         return $this->primaryTechnicalLanguage;
     }
@@ -390,7 +348,7 @@ class User
     /**
      * @return string
      */
-    public function getLocation() : string
+    public function getLocation()
     {
         return $this->location;
     }
@@ -406,7 +364,7 @@ class User
     /**
      * @return string
      */
-    public function getPrimarySpokenLanguage() : string
+    public function getPrimarySpokenLanguage()
     {
         return $this->primarySpokenLanguage;
     }
@@ -422,7 +380,7 @@ class User
     /**
      * @return string
      */
-    public function getGender() : string
+    public function getGender()
     {
         return $this->gender;
     }
@@ -438,7 +396,7 @@ class User
     /**
      * @return string
      */
-    public function getAgeRange() : string
+    public function getAgeRange()
     {
         return $this->ageRange;
     }
@@ -449,14 +407,6 @@ class User
     public function setAgeRange(string $ageRange)
     {
         $this->ageRange = $ageRange;
-    }
-
-    /**
-     * @return Preference
-     */
-    public function getNotificationPreference() : Preference
-    {
-        return $this->notificationPreference;
     }
 
     /**
@@ -489,5 +439,21 @@ class User
     public function setAuthSource(string $authSource)
     {
         $this->authSource = $authSource;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
     }
 }

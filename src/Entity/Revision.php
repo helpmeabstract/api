@@ -6,8 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HelpMeAbstract\Entity\Behavior\HasCreatedDate;
 use HelpMeAbstract\Entity\Behavior\HasUuid;
-use HelpMeAbstract\Entity\Notification\Subject;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity(repositoryClass="HelpMeAbstract\Repository\RevisionRepository")
@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @ORM\HasLifecycleCallbacks
  */
-class Revision implements Subject
+class Revision
 {
     use HasCreatedDate;
     use HasUuid;
@@ -32,7 +32,8 @@ class Revision implements Subject
     /**
      * @ORM\Column(
      *     type="uuid",
-     *     name="submission_identifier"
+     *     name="submission_identifier",
+     *     nullable=false
      * )
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
@@ -43,6 +44,7 @@ class Revision implements Subject
 
     /**
      * @ORM\ManyToOne(targetEntity="HelpMeAbstract\Entity\User")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      *
      * @var User
      */
@@ -55,13 +57,13 @@ class Revision implements Subject
      */
     private $comments;
 
-    public function __construct(User $user, string $body, string $submissionId = null)
+    public function __construct(User $user, string $body, UuidInterface $submissionId = null)
     {
         $this->comments = new ArrayCollection();
 
         $this->author = $user;
         $this->body = $body;
-        $this->submissionIdentifier = $submissionId ?: Uuid::getFactory()->uuid4();
+        $this->submissionIdentifier = $submissionId ?: Uuid::uuid4();
     }
 
     /**
@@ -101,5 +103,13 @@ class Revision implements Subject
     public function getHeadline()  : string
     {
         // TODO: Implement getHeadline() method.
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody(): string
+    {
+        return $this->body;
     }
 }

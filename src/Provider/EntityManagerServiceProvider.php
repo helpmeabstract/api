@@ -60,7 +60,7 @@ class EntityManagerServiceProvider extends AbstractServiceProvider
                 'dbname' => getenv('MYSQL_DATABASE') ?: 'helpmeabstract',
             ];
 
-            return  ORM\EntityManager::create($dbParams, $config);
+            return ORM\EntityManager::create($dbParams, $config);
         });
 
         $this->container->share(HelperSet::class, function () {

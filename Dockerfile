@@ -1,4 +1,4 @@
-FROM php:7-apache
+FROM php:7.1.8-apache
 
 RUN apt-get update && apt-get install -y zlib1g-dev git && apt-get clean && apt-get autoremove
 
