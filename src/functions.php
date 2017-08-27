@@ -7,6 +7,7 @@ namespace HelpMeAbstract {
 
     const CURRENT_USER_ATTRIBUTE = 'currentUser';
     const HELP_ME_ABSTRACT_COOKIE = 'hma-user-id';
+    const REQUEST_HANDLER_CLASS = 'request-handler-class';
 
     function next(RequestInterface $request, ResponseInterface $response, callable $next = null) : ResponseInterface
     {
