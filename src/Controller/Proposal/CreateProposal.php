@@ -6,27 +6,31 @@ use Assert\Assert;
 use Assert\Assertion;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\Revision;
+use HelpMeAbstract\Event;
 use HelpMeAbstract\Output\CreatesFractalScope;
 use HelpMeAbstract\Output\FractalAwareInterface;
 use HelpMeAbstract\Permission\RequiresCurrentUser;
 use HelpMeAbstract\Repository\RevisionRepository;
 use HelpMeAbstract\Response\BadRequestResponse;
 use HelpMeAbstract\Transformer\RevisionTransformer;
+use League\Event\EmitterAwareInterface;
+use League\Event\EmitterAwareTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response\JsonResponse;
 
-class CreateProposal implements FractalAwareInterface
+class CreateProposal implements FractalAwareInterface, EmitterAwareInterface
 {
     use RequiresCurrentUser;
     use CreatesFractalScope;
+    use EmitterAwareTrait;
 
     private $revisionRepository;
     private $db;
 
     /**
-     * @param EntityManager      $db
+     * @param EntityManager $db
      * @param RevisionRepository $revisionRepository
      */
     public function __construct(EntityManager $db, RevisionRepository $revisionRepository)
@@ -64,6 +68,8 @@ class CreateProposal implements FractalAwareInterface
 
         $this->db->persist($revision);
         $this->db->flush();
+
+        $this->getEmitter()->emit(Event\Proposal::created($revision, $user));
 
         return new JsonResponse($this->outputItem($revision, new RevisionTransformer(), 'revisions')->toArray(), 200);
     }

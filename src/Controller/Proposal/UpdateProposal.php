@@ -6,6 +6,7 @@ use Assert\Assert;
 use Assert\Assertion;
 use Doctrine\ORM\EntityManager;
 use HelpMeAbstract\Entity\Revision;
+use HelpMeAbstract\Event;
 use HelpMeAbstract\Output\CreatesFractalScope;
 use HelpMeAbstract\Output\FractalAwareInterface;
 use HelpMeAbstract\Permission\RequiresCurrentUser;
@@ -13,15 +14,18 @@ use HelpMeAbstract\Repository\RevisionRepository;
 use HelpMeAbstract\Response\BadRequestResponse;
 use HelpMeAbstract\Response\NotFoundResponse;
 use HelpMeAbstract\Transformer\RevisionTransformer;
+use League\Event\EmitterAwareInterface;
+use League\Event\EmitterAwareTrait;
 use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
-class UpdateProposal implements FractalAwareInterface
+class UpdateProposal implements FractalAwareInterface, EmitterAwareInterface
 {
     use RequiresCurrentUser;
     use CreatesFractalScope;
+    use EmitterAwareTrait;
 
     private $revisionRepository;
     private $db;
@@ -74,6 +78,8 @@ class UpdateProposal implements FractalAwareInterface
 
         $this->db->persist($revision);
         $this->db->flush();
+
+        $this->getEmitter()->emit(Event\Proposal::updated($revision, $proposal->getAuthor()));
 
         return new JsonResponse($this->outputItem($revision, new RevisionTransformer(), 'revisions')->toArray(), 200);
     }
