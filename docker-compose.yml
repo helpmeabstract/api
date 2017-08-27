@@ -6,6 +6,8 @@ services:
       - MYSQL_USER=helpmeabstract
       - MYSQL_PASSWORD=securelol
       - ENV=development
+      - GITHUB_CLIENT_ID=a6b04a180265cd2936e3
+      - GITHUB_SECRET=22c54ec492b329dd6fa13476c04c399e90e7c15b
     volumes:
       - .:/var/www
     ports:
