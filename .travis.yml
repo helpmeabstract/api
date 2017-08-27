@@ -36,7 +36,7 @@ install:
 
 before_script:
   - sh scripts/setup_test_database.sh
-  - make run-local-migrations
+  - make travis-run-migrations
 
 script:
 #  - vendor/bin/doctrine orm:info

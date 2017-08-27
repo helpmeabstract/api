@@ -25,9 +25,11 @@ deploy-staging: deploy-container
 	@echo Deploying to staging
 	php scripts/ecs_deploy.php $(AWS_PROFILE) $(AWS_REGION) helpmeabstract-staging helpmeabstract-api
 
-run-local-migrations:
+travis-run-migrations:
 	vendor/bin/doctrine migrations:migrate
 
+local-run-migrations:
+	docker-compose exec app vendor/bin/doctrine migrations:migrate
 cs:
 	vendor/bin/php-cs-fixer fix --config=.php_cs
 
