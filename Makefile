@@ -26,7 +26,7 @@ travis-run-migrations:
 	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=127.0.0.1	vendor/bin/doctrine migrations:migrate
 
 local-run-migrations:
-	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=0.0.0.0:3306 vendor/bin/doctrine migrations:migrate
+	MYSQL_USER=helpmeabstract MYSQL_PASSWORD=securelol MYSQL_HOSTNAME=0.0.0.0:3306 vendor/bin/doctrine migrations:migrate --no-interaction
 cs:
 	vendor/bin/php-cs-fixer fix --config=.php_cs
 
