@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace HelpMeAbstract;
 
 use HelpMeAbstract\Output\FractalAwareInterface;
+use League\Event\Emitter;
+use League\Event\EmitterAwareInterface;
+use League\Event\EmitterInterface;
 use League\Fractal\Manager;
 use League\Fractal\Serializer\JsonApiSerializer;
 use Psr\Http\Message\ResponseInterface;
@@ -32,12 +35,16 @@ final class Container extends \League\Container\Container
             }
         );
 
-        $this->share(Environment::class, function () : Environment {
+        $this->share(Environment::class, function (): Environment {
             return new Environment(getenv('env') ?: Environment::DEVELOPMENT);
         });
 
         $this->share(Manager::class, function () {
             return (new Manager())->setSerializer(new JsonApiSerializer());
+        });
+
+        $this->share(EmitterInterface::class, function () {
+            return new Emitter();
         });
 
         $this->addServiceProvider(new Provider\LoggerServiceProvider());
@@ -49,6 +56,7 @@ final class Container extends \League\Container\Container
 
         $this->inflector(LoggerAwareInterface::class)->invokeMethod('setLogger', [LoggerInterface::class]);
         $this->inflector(FractalAwareInterface::class)->invokeMethod('setManager', [Manager::class]);
+        $this->inflector(EmitterAwareInterface::class)->invokeMethod('setEmitter', [EmitterInterface::class]);
 
         $this->share(Run::class, function () {
             $whoops = new Run();
